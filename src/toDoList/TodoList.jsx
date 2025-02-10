@@ -3,7 +3,7 @@ import './TodoList.css'
 function ToDoList() {
     const [tasks, setTasks] = useState(["Städa vardags rummet", "Hjälpa pappa med städa vinden"]);
     const [newTask, setNewTask] = useState("");
-
+    const  [displayState, setDisplayState] = useState("none");
     function handleInputChange(event) {
         setNewTask(event.target.value);
     }
@@ -22,11 +22,27 @@ function ToDoList() {
         setTasks(updatedList)
     }
 
+
+    function stateHandler(){
+        if(displayState === "none"){
+            setDisplayState('block')
+        }else{
+            setDisplayState("none");
+        }
+    }
     return(
         <div className="toDoList">
 
             <h1>To do list</h1>
-            <div>
+
+            <button className="stateBtn" onClick={stateHandler} > Add </button>
+            <div className="modal" style={{display:displayState}}>
+                 <div className="content">
+                     <span className="close"  onClick={stateHandler} >&times;</span>
+                     <p>Some text in the Modal..</p>
+                  </div>
+            </div>      
+            <div> 
                 <input
                     type="text"
                     placeholder="Enter a task...."
