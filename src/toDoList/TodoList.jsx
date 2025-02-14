@@ -1,17 +1,29 @@
 import { useState } from "react";
 import './TodoList.css' 
 function ToDoList() {
-    const [tasks, setTasks] = useState(["Städa vardags rummet", "Hjälpa pappa med städa vinden"]);
+    const [tasks, setTasks] = useState([{Task : 'Clear your room', Description : 'Get all the socks of the floor you little pig', Points : 50}]);
     const [newTask, setNewTask] = useState("");
+    const [newDescription, setNewDescription] = useState();
+    const [newTaskPoints, setNewTaskPoints] = useState("");
     const  [displayState, setDisplayState] = useState("none");
-    function handleInputChange(event) {
+
+    function newTaskInputHandler(event) {
         setNewTask(event.target.value);
     }
 
+    function newDescriptionInputHandler(event) {
+        setNewDescription(event.target.value);
+    }
+
+    function newTaskPointsHandler(event) {
+        setNewTaskPoints(event.target.value);
+        console.log(newTaskPoints);
+        
+    }
     function addTask() {
 
         if(newTask.trim() !== ""){
-            setTasks(t => [...t, newTask]);
+            setTasks(t => [...t, {Task : newTask, Description : newDescription , Points : newTaskPoints}]);
             setNewTask('');
         }
     }
@@ -39,22 +51,37 @@ function ToDoList() {
             <div className="modal" style={{display:displayState}}>
                  <div className="content">
                      <span className="close"  onClick={stateHandler} >&times;</span>
-                     <p>Some text in the Modal..</p>
+                         <div> 
+                            
+                          <input
+                              type="text"
+                              placeholder="Enter a task...."
+                              value={newTask}
+                              onChange={newTaskInputHandler}/>
+                             
+
+                             <input
+                              type="text"
+                              placeholder="Enter description...."
+                              value={newDescription}
+                              onChange={newDescriptionInputHandler}/>                        
+
+                             <input
+                              type="int"
+                              placeholder="Enter Points..."
+                              value={newTaskPoints}
+                              onChange={newTaskPointsHandler}
+                              />
+                             <button className="addBtn" onClick={addTask}>Add</button>
+                         </div>
                   </div>
             </div>      
-            <div> 
-                <input
-                    type="text"
-                    placeholder="Enter a task...."
-                    value={newTask}
-                    onChange={handleInputChange}/>
-                <button className="addBtn" onClick={addTask}>Add</button>
-            </div>
-
             <ol>
                 {tasks.map((task, index) =>
                     <li key={index}>
-                        <span className="text">{task}</span>
+                        <span className="text">{task.Task}</span>
+                        <span>{task.Description}</span>
+                        <span>{task.Points}</span>
                         <button
                          className="deleteBtn"
                          onClick={() => deleteTask(index)}
