@@ -19,7 +19,7 @@ const  [displayState, setDisplayState] = useState(null);
 
                   <h3> Reward : {task.Points}</h3>
                       <button
-                       className="deleteBtn"
+                        className={`deleteBtn ${displayState === index ? "expanded" : ""}`}
                        onClick={(e) => {
                         deleteTask(index);
                        }}
