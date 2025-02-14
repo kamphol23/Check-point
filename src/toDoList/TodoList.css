@@ -23,11 +23,11 @@ button{
 }
 
 .addBtn{
-    background-color: hsl(120, 79%, 36%);
+    background-color: hsla(120, 79%, 36%, 0.783)
 }
 
 .addBtn:hover{
-    background-color:  hsl(120, 79%, 26%);
+    background-color:  hsl(120, 79%, 36%);
 }
 
 .deleteBtn{
@@ -36,13 +36,6 @@ button{
 
 .deleteBtn:hover{
     background-color:  hsl(10, 90%, 40%);
-}
-
-input[type="text"]{
-    font-size: 1.3rem;
-    padding: 10px;
-    border: 2px solid hsla(0, 0%, 50%, 0.5);
-    border-radius: 5px;
 }
 
 ol{
@@ -61,15 +54,6 @@ li{
     align-items: center;
     margin-bottom: 10px;
 }
-.text{
-    flex: 1;
-}
-
-.deleteBtn, .addBtn{
-    padding: 8px 12px;
-    font-size: 1.3rem;
-    margin-left: 10px;
-}
 
 .modal{
  
@@ -82,15 +66,70 @@ li{
     width: 100%;
     overflow: auto;
     background-color:hsla(0, 0%, 0%, 0.109);
+    text-align: left;
+
 }
 
 .content{
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 30px 50px 50px 50px;
+    border-radius: 5px;
     border: 1px solid #888;
-    width: 70%;
+    width: 60%;
     height: 60vh;
+         h1{
+          color: hsla(0, 0%, 0%, 0.90);
+          font-size: 2rem;
+          margin-bottom: 40px;
+          }
+          textarea{
+            height: 250px;
+            width: 650px;
+            resize: none;
+            font-size: 1.3rem;
+            border: 2px solid hsla(0, 0%, 50%, 0.5);
+            border-radius: 5px;
+            outline: none;
+            transition: border-bottom 0.2s ease;
+          }
+          textarea:focus{
+            border: 2px solid hsla(0, 0%, 0%, 0.60);
+          }
+          input{ 
+            font-size: 1.3rem;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid  hsla(0, 0%, 50%, 0.5);
+            outline: none;
+            transition: border-bottom 0.2s ease;
+          }
+          input:focus::placeholder{
+               color: transparent;
+          }
+          input:focus{
+            border-bottom: 2px solid hsla(0, 0%, 0%, 0.60);
+          }
+
+}
+.addTaskBtnWraper{
+    display: flex;
+    justify-content: right;
+    margin-top: 20px;
+
+    .addBtn{
+        padding: 18px 22px;
+        font-size: 1.3rem;
+        margin-left: 10px;
+    }
+}
+
+.conten-wraper{
+    border: solid 2px hsla(0, 0%, 50%, 0.5);
+    border-radius: 6px;
+    display: grid;
+    justify-content: center;
+    padding: 50px 0 50px 0;
 }
 
 .close {
@@ -105,4 +144,32 @@ li{
     color: #000;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .task-display{
+    display: grid;
+    text-align: left;
+        h3{
+            font-size: 1.4rem;
+            margin: 10px 0 10px 0;
+        }
+        p{
+            font-size: 1.2rem;
+        
+        }
+  }
+
+  
+  .task-description {
+    max-height: 50px; 
+    overflow: hidden;
+    opacity: 0.8;
+    transition: max-height 0.5s ease, opacity 0.3s ease; 
+  }
+  
+
+  .task-description.expanded {
+    max-height: 1000px; 
+    opacity: 1; 
+    transition: max-height 0.5s ease, opacity 0.5s ease;
   }
