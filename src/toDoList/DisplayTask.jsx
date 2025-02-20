@@ -1,6 +1,6 @@
 import './TodoList.css'
 import { useState } from 'react'
-function DisplayTask ({tasks,deleteTask}){
+function DisplayTask ({tasks,deleteTask,handleComplete}) {
 const  [displayState, setDisplayState] = useState(null);
 
     return(
@@ -16,14 +16,19 @@ const  [displayState, setDisplayState] = useState(null);
                   <div className={`task-description ${displayState === index ? "expanded" : ""}`}>
                      {task.Description.slice(0, 50)}{displayState === index && task.Description.slice(50)}
                   </div>                   
+                        <h3> Date : {task.Date}</h3>
+                        <h3> Reward : {task.Points}</h3>
+                    <button
+                    className={`deleteBtn ${displayState === index ? "expanded" : ""}`}
+                    onClick={(e) => {
+                    deleteTask(index);}}
+                    >Delete</button>
+                    <input
+                    type="checkbox"
+                    onChange={() => handleComplete(index)}
+                    />
 
-                  <h3> Reward : {task.Points}</h3>
-                      <button
-                        className={`deleteBtn ${displayState === index ? "expanded" : ""}`}
-                       onClick={(e) => {
-                        deleteTask(index);
-                       }}
-                       >Delete</button>
+
                  </div>
             </li>
         )}

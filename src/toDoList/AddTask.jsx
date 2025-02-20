@@ -13,13 +13,22 @@ function AddTask({ setTasks }) {
 
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  
+  const formatDateISO = (date) => {
+    const isoString = date.toISOString();
+    const formattedDate = isoString.split("T")[0];
+    return formattedDate;
+};
 
- 
+
+const currentDate = new Date();
+
   const addTask = () => {
     if (newTask.trim() !== "") {
       setTasks((tasks) => [
         ...tasks,
-        { Task: newTask, Description: newDescription, Points: newTaskPoints },
+        { Task: newTask, Description: newDescription,
+          Points: newTaskPoints, Date: formatDateISO(currentDate), isCompleted: false },
       ]);
       setNewTask("");
       setNewDescription("");
