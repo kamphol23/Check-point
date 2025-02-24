@@ -3,7 +3,7 @@ import './TodoList.css'
 
 import AddTask from "./AddTask";
 import DisplayTask from "./DisplayTask";
-
+import CompletedTask from "./CompletedTask";
 
 function ToDoList({balance,setBalance}) {
     const [tasks, setTasks] = useState([{
@@ -19,8 +19,14 @@ const [completedTasks, setCompletedTasks] = useState([])
 
         const updatedList = tasks.filter((_,i) => i !== index)
         setTasks(updatedList)
+        
     }
+    function deleteCompletedTask(index) {
 
+        const updatedList = completedTasks.filter((_,i) => i !== index)
+        setCompletedTasks(updatedList)
+        
+    }
     function handleComplete(index) {
         const task = tasks[index]
         task.isCompleted = !task.isCompleted
@@ -43,21 +49,16 @@ const [completedTasks, setCompletedTasks] = useState([])
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <h1>To do list</h1>   
                  <AddTask setTasks={setTasks}/>
-             </div>
-                 <DisplayTask tasks={tasks} deleteTask={deleteTask} handleComplete={handleComplete}/>          
-                 <p>{balance}</p>
-                 <div>{completedTasks.map((task,index) =>{
-                      return(
-                          <div key={index}>
-                              <h3>{task.Task}</h3>
-                              <p>{task.Description}</p>
-                              <p>{task.Points}</p>
-                              <p>{task.Date}</p>
-                              <input type="checkbox" onChange={() => handleUnComplete(index)}
-                              checked={task.isCompleted}/>
-                          </div>
-                      )
-                 })}</div>
+                 </div>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <DisplayTask tasks={tasks} deleteTask={deleteTask} handleComplete={handleComplete}/>     
+                    <div    className="balance-completedTask-wrapper" >
+                        <div className="balance">{balance}</div>
+                         <CompletedTask completedTasks={completedTasks} 
+                         handleUnComplete={handleUnComplete} deleteCompletedTask={deleteCompletedTask}/>
+                    
+                    </div> 
+                </div>    
                 </div>
     )
 }
