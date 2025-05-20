@@ -32,9 +32,11 @@ const currentDate = new Date();
       ]);
       setNewTask("");
       setNewDescription("");
-      setNewTaskPoints("");
+      setNewTaskPoints();
       toggleModal(); 
     }
+    console.log(newTaskPoints);
+    
   };
 
   return (
@@ -64,7 +66,7 @@ const currentDate = new Date();
 
               <h3>Reward</h3>
               <input
-                type="number"
+                type="number"         
                 placeholder="Enter Points..."
                 value={newTaskPoints}
                 onChange={handlePointsChange}

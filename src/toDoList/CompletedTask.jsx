@@ -9,11 +9,11 @@ const CompletedTask = ({completedTasks,handleUnComplete,deleteCompletedTask}) =>
             
             return(
                 <div key={index} onClick={() => setDisplayState(displayState === index ? null : index)}
-                className={`task-description ${displayState === index ? "expanded" : ""}`}>
-                    <h3>{task.Task}</h3>
-                    <p>{task.Description}</p>
-                    <p>Reward : {task.Points}</p>
-                    <p>Task added : {task.Date}</p>
+                    className={`task-description ${displayState === index ? "expanded" : ""}`}>
+                        <h3>{task.Task}</h3>
+                            <p>{task.Description}</p>
+                            <p>Reward : {task.Points}</p>
+                            <p>Task added : {task.Date}</p>
                     <span>
                     <input type="checkbox" onChange={() => handleUnComplete(index)}
                     checked={task.isCompleted}/>

@@ -27,14 +27,19 @@ const [completedTasks, setCompletedTasks] = useState([])
         setCompletedTasks(updatedList)
         
     }
+
+    // lägger till completed task i completed task array och tar bort den från tasks array
+    // och lägger till poängen i balansen
     function handleComplete(index) {
         const task = tasks[index]
         task.isCompleted = !task.isCompleted
         setTasks([...tasks.filter((_,i) => i !== index)])
-        setBalance(balance + task.Points)
+        setBalance(balance + Number(task.Points))
         setCompletedTasks([...completedTasks,task])
     }
 
+    // tar bort completed task från completed task array och lägger till den i tasks array
+    // och tar bort poängen från balansen
     function handleUnComplete(index) {
         const task = completedTasks[index]
         task.isCompleted = !task.isCompleted
@@ -48,17 +53,19 @@ const [completedTasks, setCompletedTasks] = useState([])
           
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <h1>To do list</h1>   
-                 <AddTask setTasks={setTasks}/>
+                    <AddTask setTasks={setTasks}/>
                  </div>
+
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <DisplayTask tasks={tasks} deleteTask={deleteTask} handleComplete={handleComplete}/>     
-                    <div    className="balance-completedTask-wrapper" >
+                    <DisplayTask tasks={tasks} deleteTask={deleteTask} handleComplete={handleComplete}/>  
+
+                    <div className="balance-completedTask-wrapper" >
+                        
                         <div className="balance">{balance}</div>
                          <CompletedTask completedTasks={completedTasks} 
-                         handleUnComplete={handleUnComplete} deleteCompletedTask={deleteCompletedTask}/>
-                    
-                    </div> 
-                </div>    
+                         handleUnComplete={handleUnComplete} deleteCompletedTask={deleteCompletedTask}/>                   
+                        </div> 
+                    </div>    
                 </div>
     )
 }
