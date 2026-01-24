@@ -11,18 +11,19 @@ import { useState } from 'react';
 
 function App() {
   const [balance, setBalance] = useState(23);
-  const [userState, setUserState] = useState({
+
+  // Userroll state.
+  const [userRoll, setUserRoll] = useState({
     name: 'Kotl',
     userRoll: 'admin',});
 
   return (
     <Router>
     <div className="App">
-     
-        <h1>Welcome to the Rewards App</h1>
+    
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/todo">To-Do List</Link>
+          <Link to="/todo">Dashboards</Link>
           <Link to="/rewards">Rewards</Link>
           <Link to="/user">User</Link>
         </nav>
@@ -34,8 +35,7 @@ function App() {
         <Route path="/rewards" element={<RenderRewards />} />
         <Route path="/user" element={
           <>
-            <User userState={userState} setUserState={setUserState} />
-            <SwitchRoll userState={userState} setUserState={setUserState} />
+            <User userRoll={userRoll} setUserRoll={setUserRoll} />
           </>
         } />
       </Routes>

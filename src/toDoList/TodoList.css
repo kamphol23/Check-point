@@ -1,11 +1,7 @@
-body{
-    background-color: hsla(228, 14%, 7%, 0.865);
-}
 .toDoList{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
-    margin: 100px 100px 0px 20vw;
-    border: solid 2px hsla(0, 0%, 0%, 0.504);
+    border: solid 2px rgba(0, 0, 0, 0.14);
     border-radius: 10px;
     width: 70vw;
     height: auto;

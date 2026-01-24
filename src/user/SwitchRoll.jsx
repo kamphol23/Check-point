@@ -1,19 +1,19 @@
 import react from "react";
 
-function SwitchRoll({ userState, setUserState }) {
- 
+function SwitchRoll({ userRoll, setUserRoll }) {
+
   return (
     <div>
         <button
             className="switch-roll"
             onClick={() => {
-                setUserState({
-                    ...userState,
-                    userRoll: userState.userRoll === "admin" ? "user" : "admin",
+                setUserRoll({
+                    ...userRoll,
+                    userRoll: userRoll.userRoll === "admin" ? "user" : "admin",
                 });
             }}
         >
-            Switch to {userState.userRoll === "admin" ? "User" : "Admin"}
+            Switch to {userRoll.userRoll === "admin" ? "User" : "Admin"}
         </button>
     </div>
   );
