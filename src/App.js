@@ -1,12 +1,14 @@
 import ToDoList from './toDoList/TodoList';
 import User from './user/User';
-import SwitchRoll from './user/SwitchRoll';
 import RenderRewards from './rewards/RenderRewards';
+import logIn from './api/auth';
+import listsByUserId from './api/lists';
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 import './App.css';
 import { useState } from 'react';
+
 
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
     name: 'Kotl',
     userRoll: 'admin',});
 
+   logIn();
+   listsByUserId();
   return (
     <Router>
     <div className="App">
