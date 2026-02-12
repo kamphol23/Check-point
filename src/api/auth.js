@@ -18,7 +18,8 @@ const logIn = async () => {
 }
 
 
-
+const { data: user } = await supabase.auth.getUser();
+console.log(user);
 
 
 export default logIn;

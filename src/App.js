@@ -1,8 +1,11 @@
 import ToDoList from './toDoList/TodoList';
 import User from './user/User';
 import RenderRewards from './rewards/RenderRewards';
+import Lists from './toDoList/Lists';
+
 import logIn from './api/auth';
-import listsByUserId from './api/lists';
+
+import todos from './api/todos';
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
@@ -20,7 +23,8 @@ function App() {
     userRoll: 'admin',});
 
    logIn();
-   listsByUserId();
+   
+   todos();
   return (
     <Router>
     <div className="App">
@@ -35,7 +39,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<h2>Home Page</h2>} />
-        <Route path="/todo" element={<ToDoList  balance={balance} setBalance={setBalance}/>} />
+        <Route path="/todo" element={<Lists/>} />
         <Route path="/rewards" element={<RenderRewards />} />
         <Route path="/user" element={
           <>

@@ -1,6 +1,13 @@
 .App{
-margin: 100px 100px 0px 0;
+margin: 100px 100px 100px 100px;
 display: flex;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+text-align: center;
+border: solid 2px rgba(0, 0, 0, 0.14);
+border-radius: 10px;
+width: 70vw;
+height: auto;
+padding: 50px;
 }
 
 nav{
