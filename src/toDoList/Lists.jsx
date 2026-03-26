@@ -1,26 +1,37 @@
-import React from "react";
-import listsByUserId from "../api/lists";
+
+import {getLists} from "../api/lists";
 import { useEffect, useState } from "react";
-
-
+import { Link } from "react-router-dom";
+ 
 function Lists() {
 
     const [lists, setLists] = useState([]);
-    useEffect(() => {
-        listsByUserId().then((data) => {
-            setLists(data);
-        });
-    }, []);
 
-        console.log(lists);
-        
+useEffect(() => {
+    const fetchLists = async () => {
+        try {
+            const data = await getLists();
+            setLists(data);
+        } catch (error) {
+            console.error("Error fetching lists:", error);
+        }
+    };
+
+    fetchLists();
+    
+    
+}, []);
+console.log();
     return(
-        <div className="toDoList">
-            <h1>Lists</h1>
-            {lists.map((list) => (
-                <div key={list.id}>{list.titel}</div>
-            ))}
-        </div>
+    <div>
+      <h1>Lists</h1>
+
+{lists.map((list) => (
+  <Link key={list.id} to={`/list/${list.id}`}>
+    {list.title}
+  </Link>
+))}
+    </div>
     )
 }
 

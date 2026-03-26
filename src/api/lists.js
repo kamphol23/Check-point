@@ -1,18 +1,14 @@
 import supabase from "./supabaseClient";
 
-const listsByUserId = async () => {
-let { data: list, error } = await supabase
-  .from('list')
-.select('*')
 
+export const getLists = async () => {
+  const { data: list, error } = await supabase
+    .from('list')
+    .select('id, title');
 
-  if (error) {
-    console.error('Error fetching lists:', error);
-    return null;
-  }
+  if (error) throw error;
 
- console.log('Lists fetched:', list);
-return list
-}
+  console.log("lists", list);
+  return list;
+};
 
-export default listsByUserId;
