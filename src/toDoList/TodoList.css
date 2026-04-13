@@ -16,7 +16,7 @@ input[type="checkbox"]{
 }
 h1{
     font-size: 4rem;
-    color: azure;
+    color: rgb(0, 0, 0);
 }
 
 button{
