@@ -40,7 +40,7 @@ function App() {
       <Routes>
         <Route path="/" element={<h2>Home Page</h2>} />
         <Route path="/todo" element={<Lists/>} />
-        <Route path="/todo/:id" element={<ListDetail />} />
+        <Route path="/ListDetail/:id" element={<ListDetail />} />
         <Route path="/rewards" element={<RenderRewards />} />
         <Route path="/user" element={
           <>
