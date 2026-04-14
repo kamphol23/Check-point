@@ -1,16 +1,20 @@
 import supabase from "./supabaseClient";
 
 
-const todos = async () => {
+const getTodos = async (id) => {
 
 let { data: todos, error } = await supabase
+
   .from('todos')
   .select('*')
-          
+  .eq("list_id", id); 
+
 if (error) {
   console.error('Error fetching todos:', error);
 }
 
-console.log('Todos fetched:', todos);
+return todos;
+
 }
-export default todos;
+
+export default getTodos;
