@@ -34,7 +34,7 @@ function Lists() {
 
             {lists.map((list) => (
                 <div key={list.id}>
-                    <Link to={`/ListDetail/${list.id}`}>
+                    <Link to={`/ListDetail/${list.id}`} state={{ ListTitle: list.title }}>
                         {list.title}
                     </Link>
                 </div>

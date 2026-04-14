@@ -5,7 +5,7 @@ import Lists from './toDoList/Lists';
 
 import logIn from './api/auth';
 
-import todos from './api/todos';
+
 import ListDetail from './toDoList/ListDetail';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ function App() {
 
    logIn();
    
-   todos();
+
   return (
     <Router>
     <div className="App">
