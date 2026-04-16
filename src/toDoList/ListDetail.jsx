@@ -30,8 +30,11 @@ function ListDetail() {
 
 const completed = todos.filter(t => t.completed);
 const notCompleted = todos.filter(t => !t.completed);
+
   
 const toggleTodo = async (todo) => {
+  console.log("click", todo);
+  
   try {
     await isCompleted(todo.id, !todo.completed);
     setTodos((prevTodos) =>
