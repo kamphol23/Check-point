@@ -4,7 +4,10 @@ import { useLocation } from "react-router-dom";
 
 import getTodos from "../api/todos";
 import isCompleted from "../api/isCompleted";
+
 import CompletedTask from "./CompletedTask";
+import DisplayTask from "./DisplayTask";
+import AddTask from "./AddTask";
 
 function ListDetail() {
   const { id } = useParams();
@@ -32,42 +35,43 @@ const completed = todos.filter(t => t.completed);
 const notCompleted = todos.filter(t => !t.completed);
 
   
-const toggleTodo = async (todo) => {
+const completedHandler = async (todo) => {
   console.log("click", todo);
   
   try {
     await isCompleted(todo.id, !todo.completed);
+    
     setTodos((prevTodos) =>
       prevTodos.map((t) =>
         t.id === todo.id ? { ...t, completed: !t.completed } : t
       )
     );
+
+
   } catch (error) {
     console.error("Error toggling todo:", error);
-  }};
+  }
+ 
+  };
 
 
 return (
   <div style={{ display: "flex", gap: "20px" }}>
     <div>
       <h1>{ListTitle}</h1>
-
-      <h2>Not completed</h2>
-{notCompleted.map((todo) => (
-  <div key={todo.id}>
-    <h2>{todo.title}</h2>
-    <p>{todo.description}</p>
-    <button onClick={() => toggleTodo(todo)}>
-      Mark as Completed
-    </button>
-  </div>
-))}
+      <AddTask setTasks={setTodos} listId={id} />
     </div>
 
-<CompletedTask 
-  completedTodos={completed} 
-  toggleTodo={toggleTodo} 
-/>
+      <DisplayTask
+      notCompleted={notCompleted}
+      completedHandler={completedHandler}
+      />
+      
+      <CompletedTask 
+        CompletedTask={completed} 
+       completedHandler={completedHandler} 
+      />
+
   </div>
 );
 }

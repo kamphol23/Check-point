@@ -1,18 +1,22 @@
 import './TodoList.css'
 
-const CompletedTask = ({completedTodos,toggleTodo}) =>{
-   
+const CompletedTask = ({CompletedTask,completedHandler}) =>{
+
+  if(CompletedTask.length === 0){
+    return <p>No completed tasks yet.</p>;
+  }
     return(
-        <div className='completed-task-wrapper'>
-        <h2>Completed Task</h2>   
-        {completedTodos.map((todo) => (
+        <div>
+        <h2>Completed</h2>
+        {CompletedTask.map((todo) => (
           <div key={todo.id} className="completed-task">
             <h3>{todo.title}</h3>
             <p>{todo.description}</p>
-            <button onClick={() => toggleTodo(todo)}>Mark as Not Completed</button>
+            <button onClick={() => completedHandler(todo)}>Mark as Not Completed</button>
           </div>
         ))}
        </div>
     )
+
 }
 export default CompletedTask

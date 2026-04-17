@@ -48,8 +48,8 @@ export const addListMember = async (listId, userId, listName) => {
 
 export const addTask = async (taskName, listId, description) => {
   const { data, error } = await supabase
-    .from('task')
-    .insert([{ task_name: taskName, list_id: listId, description: description }])
+    .from('todos')
+    .insert([{ title: taskName, list_id: listId, description: description}])
     .select();
 
   if (error) {

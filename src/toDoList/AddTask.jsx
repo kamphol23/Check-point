@@ -1,44 +1,36 @@
 import { useState } from "react";
+import {addTask} from "../api/addToDb";
 
-function AddTask({ setTasks }) {
+function AddTask({ setTasks, listId }) {
   const [newTask, setNewTask] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [newTaskPoints, setNewTaskPoints] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false); 
 
 
   const handleTaskChange = (event) => setNewTask(event.target.value);
   const handleDescriptionChange = (event) => setNewDescription(event.target.value);
-  const handlePointsChange = (event) => setNewTaskPoints(event.target.value);
 
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
-  
-  const formatDateISO = (date) => {
-    const isoString = date.toISOString();
-    const formattedDate = isoString.split("T")[0];
-    return formattedDate;
-};
 
-
-const currentDate = new Date();
-
-  const addTask = () => {
-    if (newTask.trim() !== "") {
-      setTasks((tasks) => [
-        ...tasks,
-        { Task: newTask, Description: newDescription,
-          Points: newTaskPoints, Date: formatDateISO(currentDate), isCompleted: false },
-      ]);
+  const createTask = async () => {
+    if (!newTask.trim()) {
+      alert("Task name cannot be empty.");
+      return;
+    }
+    try {
+      const data = await addTask(newTask, listId, newDescription);
+      console.log(data);
+      
+      setTasks((prevTasks) => [...prevTasks, data[0]]);
       setNewTask("");
       setNewDescription("");
-      setNewTaskPoints();
-      toggleModal(); 
+      toggleModal();
+    } catch (error) {
+      console.error("Error adding task:", error);
+      alert("Failed to add task. Please try again.");
     }
-    console.log(newTaskPoints);
-    
   };
-
   return (
     <div>
       <button className="stateBtn" onClick={toggleModal}>Add</button>
@@ -63,18 +55,10 @@ const currentDate = new Date();
                 value={newDescription}
                 onChange={handleDescriptionChange}
               />
-
-              <h3>Reward</h3>
-              <input
-                type="number"         
-                placeholder="Enter Points..."
-                value={newTaskPoints}
-                onChange={handlePointsChange}
-              />
             </div>
 
             <div className="addTaskBtnWrapper">
-              <button className="addBtn" onClick={addTask}>Submit</button>
+              <button className="addBtn" onClick={createTask}>Submit</button>
             </div>
           </div>
         </div>
