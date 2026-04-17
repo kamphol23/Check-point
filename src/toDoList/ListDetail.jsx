@@ -10,19 +10,19 @@ import DisplayTask from "./DisplayTask";
 import AddTask from "./AddTask";
 import { deleteTask } from "../api/delete";
 
+
 function ListDetail() {
   const { id } = useParams();
   const location = useLocation();
   const {ListTitle} = location.state || {}; 
-
   const [todos, setTodos] = useState([]);
   
   useEffect(() => {
     const fetchTodos = async () => {
       try {
         const data = await getTodos(id);
-        setTodos(data);
-        
+        setTodos(data); 
+
       } catch (error) {
         console.error("Error fetching todos:", error);
       }
@@ -83,6 +83,8 @@ return (
        deleteHandler={deleteHandler}
       />
 
+     
+    
   </div>
 );
 }

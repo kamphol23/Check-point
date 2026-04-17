@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import AddList from "./AddList";
-import { getLists } from "../api/lists";
-import { deleteListMember } from "../api/delete";
+import { getMemberLists } from "../api/lists";
+import { deleteList, deleteListMembers, deleteAllTasks } from "../api/delete";
+
 
 function Lists() {
     const [lists, setLists] = useState([]);
@@ -15,7 +16,7 @@ function Lists() {
 
             const fetchLists = async () => {
             try {
-                const data = await getLists();
+                const data = await getMemberLists();
                 setLists(data);
             } catch (error) {
                 console.error("Error fetching lists:", error);
@@ -43,6 +44,18 @@ const handleListAdded = (newList) => {
     
 };
 
+const handleDeleteList = async (listId) => {
+    try {
+        await deleteAllTasks(listId);
+        await deleteListMembers(listId);       
+        await deleteList(listId);
+        setLists((prev) => prev.filter((list) => list.list_id !== listId));
+    } catch (error) {
+        console.error("Error deleting list:", error);
+    }
+};
+
+
     return (
         <div>
             <h1>Lists</h1>
@@ -57,7 +70,7 @@ const handleListAdded = (newList) => {
                     <Link to={`/ListDetail/${list.list_id}`} state={{ ListTitle: list.list_name }}>
                         {list.list_name}
                     </Link>
-                    <button onClick={() => deleteListMember(list.list_id)}>Delete</button>
+                  <button onClick={() => handleDeleteList(list.list_id)}>Delete</button>
                 </div>
 
             ))}
