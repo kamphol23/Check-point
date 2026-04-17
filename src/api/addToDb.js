@@ -6,6 +6,7 @@ const getUserId = async () => {
     return user ? user.id : null;
 }
 
+// add a list to the database, and add the user as a owner of the list
 export const addList = async (listName) => {
   const userId = await getUserId();
 
@@ -30,6 +31,7 @@ export const addList = async (listName) => {
   return data;
 };
 
+// add a member to a list by list id, user id and list name
 export const addListMember = async (listId, userId, listName) => {
   const { data, error } = await supabase
     .from('list_members')
@@ -46,6 +48,7 @@ export const addListMember = async (listId, userId, listName) => {
   return data;
 };
 
+//add a task to the database by task name, list id and description
 export const addTask = async (taskName, listId, description) => {
   const { data, error } = await supabase
     .from('todos')
@@ -54,6 +57,21 @@ export const addTask = async (taskName, listId, description) => {
 
   if (error) {
     console.error('Error adding task:', error);
+    throw error;
+  }
+  return data;
+};
+
+//update a task's name, description by task id
+export const updateTask = async (taskId, taskName, description) => {
+  const { data, error } = await supabase
+    .from('todos')
+    .update({ title: taskName, description: description })
+    .eq('id', taskId)
+    .select();
+
+  if (error) {
+    console.error('Error updating task:', error);
     throw error;
   }
   return data;

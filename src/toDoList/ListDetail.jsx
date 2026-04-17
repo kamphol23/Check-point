@@ -4,11 +4,13 @@ import { useLocation } from "react-router-dom";
 
 import getTodos from "../api/todos";
 import isCompleted from "../api/isCompleted";
+import { deleteTask } from "../api/delete";
+import { updateTask } from "../api/addToDb";
 
 import CompletedTask from "./CompletedTask";
 import DisplayTask from "./DisplayTask";
 import AddTask from "./AddTask";
-import { deleteTask } from "../api/delete";
+
 
 
 function ListDetail() {
@@ -63,6 +65,20 @@ const completedHandler = async (todo) => {
     }
   };
 
+  const updateHandler = async (todoId, newTitle, newDescription) => {
+    try {
+      await updateTask(todoId, newTitle, newDescription);
+      setTodos((prevTodos) =>
+        prevTodos.map((t) =>
+          t.id === todoId ? { ...t, title: newTitle, description: newDescription } : t
+        )
+      );
+    }
+      catch (error) { 
+        console.error("Error updating todo:", error);
+      }
+  };
+
 
 return (
   <div style={{ display: "flex", gap: "20px" }}>
@@ -75,12 +91,14 @@ return (
       notCompleted={notCompleted}
       completedHandler={completedHandler}
       deleteHandler={deleteHandler}
+      updateHandler={updateHandler}
       />
       
       <CompletedTask 
       CompletedTask={completed} 
        completedHandler={completedHandler} 
        deleteHandler={deleteHandler}
+       updateHandler={updateHandler}
       />
 
      
