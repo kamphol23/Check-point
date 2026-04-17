@@ -1,7 +1,7 @@
 import './TodoList.css'
 import { useState } from 'react'
 
-function DisplayTask ({notCompleted,completedHandler,deleteHandler,updateHandler}){ {
+function DisplayTask ({notCompleted,completedHandler,deleteHandler,updateTaskHandler}){ {
 const  [displayState, setDisplayState] = useState(null);
 const [editedTask, setEditedTask] = useState({ title: '', description: '' });
 
@@ -24,7 +24,7 @@ return(
         {displayState === task.id ? (
           <form onSubmit={(e) => {
             e.preventDefault();
-            updateHandler(task.id, editedTask.title, editedTask.description);
+            updateTaskHandler(task.id, editedTask.title, editedTask.description);
             setDisplayState(null);
           }}>
             <input
@@ -45,7 +45,7 @@ return(
           <>
             <h3>{task.title}</h3>
             <p>{task.description}</p>
-            <button onClick={() => completedHandler(task.id)}>{task.completed ? 'Mark as Not Completed' : 'Mark as Completed'}</button>
+            <button onClick={() => completedHandler(task)}>Mark as Completed</button>
             <button onClick={() => deleteHandler(task.id)}>Delete</button>
             <button onClick={() => handleEditClick(task)}>Edit</button>
           </>

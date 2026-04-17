@@ -76,3 +76,35 @@ export const updateTask = async (taskId, taskName, description) => {
   }
   return data;
 };
+
+//update list name by list id
+export const updateListName = async (listId, newName) => {
+  const { data, error } = await supabase
+    .from('list')
+    .update({ title: newName })
+    .eq('id', listId)
+    .select();
+
+  await updateListNameInMembers(listId, newName);
+
+  if (error) {
+    console.error('Error updating list name:', error);
+    throw error;
+  }
+  return data;
+};  
+
+//update the list name in the list members table by list id
+export const updateListNameInMembers = async (listId, newName) => {
+  const { data, error } = await supabase
+    .from('list_members')
+    .update({ list_name: newName })
+    .eq('list_id', listId)
+    .select();
+
+  if (error) {
+    console.error('Error updating list name in members:', error);
+    throw error;
+  }
+  return data;
+};
