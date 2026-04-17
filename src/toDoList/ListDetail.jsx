@@ -8,6 +8,7 @@ import isCompleted from "../api/isCompleted";
 import CompletedTask from "./CompletedTask";
 import DisplayTask from "./DisplayTask";
 import AddTask from "./AddTask";
+import { deleteTask } from "../api/delete";
 
 function ListDetail() {
   const { id } = useParams();
@@ -36,8 +37,6 @@ const notCompleted = todos.filter(t => !t.completed);
 
   
 const completedHandler = async (todo) => {
-  console.log("click", todo);
-  
   try {
     await isCompleted(todo.id, !todo.completed);
     
@@ -54,6 +53,16 @@ const completedHandler = async (todo) => {
  
   };
 
+  const deleteHandler = async (todoId) => {
+    try {
+      console.log("delete", todoId);
+      await deleteTask(todoId);
+      setTodos((prevTodos) => prevTodos.filter((t) => t.id !== todoId));
+    } catch (error) {
+      console.error("Error deleting todo:", error);
+    }
+  };
+
 
 return (
   <div style={{ display: "flex", gap: "20px" }}>
@@ -65,11 +74,13 @@ return (
       <DisplayTask
       notCompleted={notCompleted}
       completedHandler={completedHandler}
+      deleteHandler={deleteHandler}
       />
       
       <CompletedTask 
-        CompletedTask={completed} 
+      CompletedTask={completed} 
        completedHandler={completedHandler} 
+       deleteHandler={deleteHandler}
       />
 
   </div>

@@ -1,8 +1,9 @@
-import { getLists } from "../api/lists";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AddList from "./AddList";
 
+import AddList from "./AddList";
+import { getLists } from "../api/lists";
+import { deleteListMember } from "../api/delete";
 
 function Lists() {
     const [lists, setLists] = useState([]);
@@ -56,7 +57,9 @@ const handleListAdded = (newList) => {
                     <Link to={`/ListDetail/${list.list_id}`} state={{ ListTitle: list.list_name }}>
                         {list.list_name}
                     </Link>
+                    <button onClick={() => deleteListMember(list.list_id)}>Delete</button>
                 </div>
+
             ))}
 
             <AddList handleListAdded={handleListAdded} />

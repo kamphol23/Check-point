@@ -1,7 +1,7 @@
 import './TodoList.css'
 import { useState } from 'react'
 
-function DisplayTask ({notCompleted,completedHandler}){ {
+function DisplayTask ({notCompleted,completedHandler,deleteHandler}){ {
 const  [displayState, setDisplayState] = useState(null);
 
 if(notCompleted === undefined || notCompleted.length === 0){
@@ -18,6 +18,7 @@ return(
         <button onClick={() => completedHandler(todo)}>
           Mark as Completed
         </button>
+        <button onClick={() => deleteHandler(todo.id)}>Delete</button>
       </div>
     ))}
   </div>
