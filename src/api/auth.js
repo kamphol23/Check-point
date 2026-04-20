@@ -12,14 +12,15 @@ const logIn = async () => {
         console.error('Error logging in:', error);
         return null;
     }
-    console.log('User logged in:', data.user);
+ 
     userData = data.user;
     return data.user;
 }
 
 
+
 const { data: user } = await supabase.auth.getUser();
-console.log(user);
+
 
 
 export default logIn;
