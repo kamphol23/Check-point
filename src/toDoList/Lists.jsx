@@ -18,6 +18,7 @@ function Lists() {
             try {
                 const data = await getMemberLists();
                 setLists(data);
+     
             } catch (error) {
                 console.error("Error fetching lists:", error);
                 setError("Failed to load lists");
@@ -26,7 +27,12 @@ function Lists() {
             }
         };
         fetchLists();
+        
+        
     }, []);
+
+ const isOwner = lists.filter(list => list.isOwner);
+ const isMember = lists.filter(list => !list.isOwner);
 
 const handleListAdded = (newList) => {
 
@@ -65,15 +71,31 @@ const handleDeleteList = async (listId) => {
 
             {!loading && lists.length === 0 && <p>No lists found.</p>}
 
-            {lists.map((list) => (
-                <div key={list.list_id}>
-                    <Link to={`/ListDetail/${list.list_id}`} state={{ ListTitle: list.list_name }}>
-                        {list.list_name}
-                    </Link>
-                  <button onClick={() => handleDeleteList(list.list_id)}>Delete</button>
-                </div>
-
-            ))}
+            <h2>Owned Lists</h2>
+            {isOwner.length === 0 ? (
+                <p>You don't own any lists.</p>
+            ) : (
+                isOwner.map((list) => (
+                    <div key={list.list_id}>
+                        <Link to={`/ListDetail/${list.list_id}`} state={{ ListTitle: list.list_name }}>
+                            {list.list_name}
+                        </Link>
+                        <button onClick={() => handleDeleteList(list.list_id)}>Delete</button>
+                    </div>
+                ))
+            )}
+            <h2>Member Lists</h2>
+            {isMember.length === 0 ? (
+                <p>You are not a member of any lists.</p>
+            ) : (
+                isMember.map((list) => (
+                    <div key={list.list_id}>
+                        <Link to={`/ListDetail/${list.list_id}`} state={{ ListTitle: list.list_name }}>
+                            {list.list_name}
+                        </Link>
+                    </div>
+                ))
+            )}
 
             <AddList handleListAdded={handleListAdded} />
         </div>
