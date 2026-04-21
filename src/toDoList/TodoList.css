@@ -55,15 +55,6 @@ ol{
 }
 
 
-li{
-    padding: 15px;
-    background-color: hsl(0, 0%, 97%);
-    border: 2px solid hsla(0, 0%, 85%, 0.75);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
 
 .modal{
  

@@ -1,0 +1,103 @@
+
+/* Burger */
+.burger {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 30px;
+  cursor: pointer;
+  z-index: 1300;
+}
+
+.burger span {
+  display: block;
+  height: 4px;
+  background: rgb(185, 23, 23);
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* Animation till X */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Side menu */
+.menu {
+  position: fixed;
+  top: 0;
+  left: -350px; /* gömd utanför skärmen */
+  width: 350px;
+  height: 100vh;
+  background: #6C835E;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  transition: left 0.3s ease;
+  z-index: 1200;
+}
+
+/* När öppen */
+.menu.open {
+  left: 0;
+}
+
+/* Länkar */
+.menu a {
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  text-decoration: none;
+  font-size: 18px;
+  background-color: transparent;
+  width: 100%;
+  font-size: 1.25rem;
+}
+
+.menu a:hover {
+  background: #444;
+}
+
+.burger {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 30px;
+  cursor: pointer;
+  z-index: 1300;
+}
+
+.burger span {
+  display: block;
+  height: 4px;
+  background: black;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* Animation → X */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+li{
+  display: flex;;
+  text-align: left;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
