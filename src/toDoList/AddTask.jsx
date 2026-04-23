@@ -1,15 +1,14 @@
 import { useState } from "react";
-import {addTask} from "../api/addToDb";
+import { addTask } from "../api/addToDb";
 
 function AddTask({ setTasks, listId }) {
   const [newTask, setNewTask] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleTaskChange = (event) => setNewTask(event.target.value);
-  const handleDescriptionChange = (event) => setNewDescription(event.target.value);
-
+  const handleDescriptionChange = (event) =>
+    setNewDescription(event.target.value);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -21,7 +20,7 @@ function AddTask({ setTasks, listId }) {
     try {
       const data = await addTask(newTask, listId, newDescription);
       console.log(data);
-      
+
       setTasks((prevTasks) => [...prevTasks, data[0]]);
       setNewTask("");
       setNewDescription("");
@@ -33,32 +32,38 @@ function AddTask({ setTasks, listId }) {
   };
   return (
     <div>
-      <button className="stateBtn" onClick={toggleModal}>Add</button>
+      <button className='stateBtn' onClick={toggleModal}>
+        Add
+      </button>
 
       {isModalOpen && (
-        <div className="modal">
-          <div className="content">
-            <span className="close" onClick={toggleModal}>&times;</span>
+        <div className='modal'>
+          <div className='content'>
+            <span className='close' onClick={toggleModal}>
+              &times;
+            </span>
             <h1>Add Task</h1>
 
-            <div className="content-wrapper">
+            <div className='content-wrapper'>
               <input
-                type="text"
-                placeholder="Enter a task"
+                type='text'
+                placeholder='Enter a task'
                 value={newTask}
                 onChange={handleTaskChange}
               />
 
               <h3>Description</h3>
               <textarea
-                placeholder="Enter description..."
+                placeholder='Enter description...'
                 value={newDescription}
                 onChange={handleDescriptionChange}
               />
             </div>
 
-            <div className="addTaskBtnWrapper">
-              <button className="addBtn" onClick={createTask}>Submit</button>
+            <div className='addTaskBtnWrapper'>
+              <button className='addBtn' onClick={createTask}>
+                Submit
+              </button>
             </div>
           </div>
         </div>

@@ -1,14 +1,5 @@
-.App{
-
-font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-text-align: center;
-width: 100%;
-height: 100vh;
-
-}
-
-
-
-body{
-    background-color:#FDFFFC;
+.App {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: center;
+  width: 100%;
 }

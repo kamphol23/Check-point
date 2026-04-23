@@ -1,4 +1,3 @@
-
 /* Burger */
 .burger {
   position: fixed;
@@ -34,15 +33,16 @@
 .menu {
   position: fixed;
   top: 0;
-  left: -350px; /* gömd utanför skärmen */
+  left: -220px; /* gömd utanför skärmen */
   width: 350px;
   height: 100vh;
-  background: #6C835E;
+  background: #6c835e;
   padding-top: 60px;
   display: flex;
   flex-direction: column;
   transition: left 0.3s ease;
   z-index: 1200;
+  box-shadow: #546749 5px 5px 8px;
 }
 
 /* När öppen */
@@ -95,8 +95,8 @@
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-li{
-  display: flex;;
+li {
+  display: flex;
   text-align: left;
   margin-bottom: 10px;
   text-decoration: none;
