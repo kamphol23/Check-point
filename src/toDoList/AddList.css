@@ -1,0 +1,35 @@
+.openForm-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background-color: transparent;
+  color: #a44a3f;
+  border: 2px solid #a44a3f;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.openForm-btn:hover {
+  background-color: #a44a3f;
+  color: #eff1ed;
+}
+
+.addList-input {
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1.2rem;
+  margin-right: 20px;
+  width: 310px;
+}
+
+.addList-btn {
+  padding: 8px 12px;
+  background-color: transparent;
+  color: #a44a3f;
+  border: 2px solid #a44a3f;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+}

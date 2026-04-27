@@ -12,6 +12,7 @@
   font-size: 4rem;
   text-align: left;
   letter-spacing: 1px;
+  padding: 0 0 0 15px;
 }
 .lists-container {
   .owned-lists-container,
@@ -35,26 +36,8 @@
 .member-list-item {
   box-shadow: #546749 5px 5px 8px;
   border-radius: 8px;
-}
-a {
-  overflow: hidden;
-  text-decoration: none;
-
-  :hover {
-    background-color: #546749;
-  }
-}
-
-.owned-list-background,
-.member-list-background {
-  background-color: #6c835e;
-  height: 90px;
-  border-radius: 8px 8px 0 0;
-  display: flex;
-  justify-content: right;
 
   button {
-    display: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem 0.3rem;
@@ -63,14 +46,38 @@ a {
     max-height: 40px;
     min-width: 40px;
     border-radius: 8px;
+    position: absolute;
   }
+}
+
+.owned-list-item:hover {
+  cursor: pointer;
+  button {
+    display: block;
+    z-index: 1;
+  }
+}
+a {
+  overflow: hidden;
+  text-decoration: none;
+  z-index: 10;
+}
+.btn-container {
+  inline-size: auto;
+  justify-content: right;
+  display: flex;
+}
+.owned-list-background,
+.member-list-background {
+  background-color: #6c835e;
+  height: 90px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: right;
 }
 .owned-list-background:hover,
 .member-list-background:hover {
-  button {
-    display: block;
-    background-color: #f0f0f0;
-  }
+  background-color: #546749;
 }
 .trashcan:hover {
   background-color: #f0f0f0;

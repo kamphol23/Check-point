@@ -33,6 +33,7 @@ function Lists() {
     const formattedList = {
       list_id: newList.id,
       list_name: newList.title,
+      isOwner: true,
     };
 
     setLists((prev) => {
@@ -56,8 +57,8 @@ function Lists() {
   return (
     <div>
       <div className='lists-wrapper'>
-        <h1 className='list-title'>Lists</h1>
-        <AddList onListAdded={handleListAdded} />
+        <h1 className='list-title'>Dashboard</h1>
+
         <div className='lists-container'>
           {loading && <p>Loading...</p>}
           {error && <p>{error}</p>}
@@ -65,22 +66,27 @@ function Lists() {
           {!loading && lists.length === 0 && <p>No lists found.</p>}
 
           <div className='owned-lists-container'>
-            <h2>Your lists</h2>
+            <div>
+              <h2>Your lists</h2>
+              <AddList handleListAdded={handleListAdded} />
+            </div>
+
             <div className='owned-lists'>
               {isOwner.length === 0 ? (
                 <p>You don't own any lists.</p>
               ) : (
                 isOwner.map((list) => (
                   <div key={list.list_id} className='owned-list-item'>
+                    <div className='btn-container'>
+                      <button onClick={() => handleDeleteList(list.list_id)}>
+                        <GoTrash className='trashcan' />
+                      </button>
+                    </div>
+
                     <Link
                       to={`/ListDetail/${list.list_id}`}
                       state={{ ListTitle: list.list_name }}>
-                      <div className='owned-list-background'>
-                        <button onClick={() => handleDeleteList(list.list_id)}>
-                          <GoTrash className='trashcan' />
-                        </button>
-                      </div>
-
+                      <div className='owned-list-background'></div>
                       <div className='list-link'>
                         <span>{list.list_name}</span>
                       </div>
