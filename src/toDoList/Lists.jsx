@@ -97,7 +97,7 @@ function Lists() {
             </div>
           </div>
           <div className='member-lists-container'>
-            <h2>Member Lists</h2>
+            <h2>Member lists</h2>
             <div className='member-lists'>
               {isMember.length === 0 ? (
                 <p>You are not a member of any lists.</p>

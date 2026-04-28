@@ -38,6 +38,7 @@
   border-radius: 8px;
 
   button {
+    display: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem 0.3rem;
@@ -56,17 +57,24 @@
     display: block;
     z-index: 1;
   }
+  .owned-list-background {
+    background-color: #546749;
+  }
+}
+.member-list-item:hover {
+  .member-list-background {
+    background-color: #546749;
+  }
 }
 a {
-  overflow: hidden;
   text-decoration: none;
-  z-index: 10;
 }
 .btn-container {
   inline-size: auto;
   justify-content: right;
   display: flex;
 }
+
 .owned-list-background,
 .member-list-background {
   background-color: #6c835e;
@@ -75,17 +83,14 @@ a {
   display: flex;
   justify-content: right;
 }
-.owned-list-background:hover,
-.member-list-background:hover {
-  background-color: #546749;
-}
+
 .trashcan:hover {
   background-color: #f0f0f0;
   font-size: 1.7rem;
 }
 .list-link {
   background-color: #1f1f21;
-  padding: 0.3rem;
+  padding: 0.5rem;
   font-size: 1.2rem;
   letter-spacing: 1px;
   color: white;

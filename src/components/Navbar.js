@@ -1,28 +1,40 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Navbar.css";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const burgerClass = isOpen ? "burger open" : "burger";
   const menuClass = isOpen ? "menu open" : "menu";
 
   return (
-    <nav>
+    <nav ref={navRef}>
       <div className={burgerClass} onClick={toggleMenu}>
         <span></span>
         <span></span>
         <span></span>
       </div>
 
-      <div
-        className={isOpen ? "overlay open" : "overlay"}
-        onClick={toggleMenu}></div>
+      <div className={isOpen ? "overlay open" : "overlay"}></div>
 
       <div className={menuClass}>
         <ul>
