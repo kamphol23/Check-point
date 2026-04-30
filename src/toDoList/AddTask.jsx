@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { addTask } from "../api/addToDb";
+import "./styling/AddTask.css";
+import Button from "../components/Button";
+import { Form } from "react-router-dom";
 
 function AddTask({ setTasks, listId }) {
   const [newTask, setNewTask] = useState("");
@@ -12,7 +15,7 @@ function AddTask({ setTasks, listId }) {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
-  const createTask = async () => {
+  const createTask = async (e) => {
     if (!newTask.trim()) {
       alert("Task name cannot be empty.");
       return;
@@ -32,13 +35,15 @@ function AddTask({ setTasks, listId }) {
   };
   return (
     <div>
-      <button className='stateBtn' onClick={toggleModal}>
-        Add
-      </button>
+      <Button
+        style='callToAction'
+        text={"Add new task"}
+        onClick={() => toggleModal()}
+      />
 
       {isModalOpen && (
         <div className='modal'>
-          <div className='content'>
+          <form className='content' onSubmit={createTask}>
             <span className='close' onClick={toggleModal}>
               &times;
             </span>
@@ -57,15 +62,19 @@ function AddTask({ setTasks, listId }) {
                 placeholder='Enter description...'
                 value={newDescription}
                 onChange={handleDescriptionChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    createTask(e);
+                  }
+                }}
               />
             </div>
 
             <div className='addTaskBtnWrapper'>
-              <button className='addBtn' onClick={createTask}>
-                Submit
-              </button>
+              <Button style='callToAction' text={"Save"} type='submit' />
             </div>
-          </div>
+          </form>
         </div>
       )}
     </div>

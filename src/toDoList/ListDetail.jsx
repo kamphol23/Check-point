@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 import getTodos from "../api/todos";
 import isCompleted from "../api/isCompleted";
@@ -10,6 +9,8 @@ import { updateTask, updateListName } from "../api/addToDb";
 import CompletedTask from "./CompletedTask";
 import DisplayTask from "./DisplayTask";
 import AddTask from "./AddTask";
+import Button from "../components/Button";
+import "./styling/ListDetail.css";
 
 function ListDetail() {
   const { id } = useParams();
@@ -86,45 +87,57 @@ function ListDetail() {
   };
 
   return (
-    <div style={{ display: "flex", gap: "20px" }}>
-      <div>
-        <h1>{newListName}</h1>
-        {editingListName ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              updateListNameHandler(id, newListName);
-              setEditingListName(false);
-            }}>
-            <input
-              type='text'
-              value={newListName}
-              onChange={(e) => setNewListName(e.target.value)}
-              placeholder='Edit list name'
-            />
-            <button type='submit'>Save</button>
-          </form>
-        ) : (
-          <button onClick={() => setEditingListName(true)}>
-            Edit List Name
-          </button>
-        )}
-
+    <div>
+      <h1>{newListName}</h1>
+      {editingListName ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            updateListNameHandler(id, newListName);
+            setEditingListName(false);
+          }}>
+          <input
+            type='text'
+            value={newListName}
+            onChange={(e) => setNewListName(e.target.value)}
+            placeholder='Edit list name'
+          />
+          <button type='submit'>Save</button>
+        </form>
+      ) : (
+        <button onClick={() => setEditingListName(true)}>Edit List Name</button>
+      )}
+      <div className='wrapper'>
         <AddTask setTasks={setTodos} listId={id} />
+
+        <div className='task-contanier'>
+          <div className='completedTask-wrapper'>
+            <h2>Todo list</h2>
+            <DisplayTask
+              notCompleted={notCompleted}
+              completedHandler={completedHandler}
+              deleteHandler={deleteHandler}
+              updateTaskHandler={updateTaskHandler}
+            />
+          </div>
+          <div>
+            <div>
+              <CompletedTask
+                CompletedTask={completed}
+                completedHandler={completedHandler}
+                deleteHandler={deleteHandler}
+              />
+            </div>
+            <div>
+              <CompletedTask
+                CompletedTask={completed}
+                completedHandler={completedHandler}
+                deleteHandler={deleteHandler}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-
-      <DisplayTask
-        notCompleted={notCompleted}
-        completedHandler={completedHandler}
-        deleteHandler={deleteHandler}
-        updateTaskHandler={updateTaskHandler}
-      />
-
-      <CompletedTask
-        CompletedTask={completed}
-        completedHandler={completedHandler}
-        deleteHandler={deleteHandler}
-      />
     </div>
   );
 }

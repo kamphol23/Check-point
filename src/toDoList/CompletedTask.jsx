@@ -1,4 +1,4 @@
-import "./TodoList.css";
+import "./styling/TodoList.css";
 
 const CompletedTask = ({ CompletedTask, completedHandler, deleteHandler }) => {
   if (CompletedTask.length === 0) {

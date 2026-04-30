@@ -1,4 +1,5 @@
-import "./TodoList.css";
+import "./styling/DisplayTask.css";
+import Button from "../components/Button";
 import { useState } from "react";
 
 function DisplayTask({
@@ -25,7 +26,6 @@ function DisplayTask({
 
     return (
       <div>
-        <h2>Not completed</h2>
         {notCompleted.map((task) => (
           <div key={task.id} className='task'>
             {displayState === task.id ? (
@@ -58,17 +58,19 @@ function DisplayTask({
                   }
                   placeholder='Edit description'
                 />
-                <button type='submit'>Save</button>
+                <Button style='callToActionSave' text={"Save"} type='submit' />
               </form>
             ) : (
               <>
                 <h3>{task.title}</h3>
-                <p>{task.description}</p>
-                <button onClick={() => completedHandler(task)}>
-                  Mark as Completed
-                </button>
-                <button onClick={() => deleteHandler(task.id)}>Delete</button>
-                <button onClick={() => handleEditClick(task)}>Edit</button>
+                <p>{task.description.substring(0, 50)}</p>
+                <div className='task-buttons'>
+                  <button onClick={() => completedHandler(task)}>
+                    Mark as Completed
+                  </button>
+                  <button onClick={() => deleteHandler(task.id)}>Delete</button>
+                  <button onClick={() => handleEditClick(task)}>Edit</button>
+                </div>
               </>
             )}
           </div>

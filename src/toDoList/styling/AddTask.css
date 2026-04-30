@@ -1,0 +1,119 @@
+.modal {
+  z-index: 1;
+  position: fixed;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: hsla(0, 0%, 0%, 0.27);
+  text-align: left;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 30px 50px 50px 50px;
+  border-radius: 6px;
+  border: 1px solid #888;
+  width: 50%;
+  height: 60vh;
+  h1 {
+    color: hsla(0, 0%, 0%, 0.9);
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  textarea {
+    height: 250px;
+    width: 650px;
+    resize: none;
+    font-size: 1.3rem;
+    border: 2px solid hsla(0, 0%, 50%, 0.5);
+    border-radius: 5px;
+    outline: none;
+    transition: border-bottom 0.2s ease;
+  }
+  textarea:focus {
+    border: 2px solid hsla(0, 0%, 0%, 0.6);
+  }
+  input {
+    font-size: 1.3rem;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid hsla(0, 0%, 50%, 0.5);
+    outline: none;
+    transition: border-bottom 0.2s ease;
+  }
+  input:focus::placeholder {
+    color: transparent;
+  }
+  input:focus {
+    border-bottom: 2px solid hsla(0, 0%, 0%, 0.6);
+  }
+}
+
+.content-wrapper {
+  border: solid 2px hsla(0, 0%, 50%, 0.5);
+  border-radius: 6px;
+  display: grid;
+  justify-content: center;
+  padding: 50px 0 50px 0;
+}
+.addTaskBtnWrapper {
+  display: flex;
+  justify-content: right;
+  margin-top: 20px;
+
+  .addBtn {
+    padding: 18px 22px;
+    font-size: 1.3rem;
+    margin-left: 10px;
+  }
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.task-display {
+  display: grid;
+  text-align: left;
+  width: 30vw;
+  h3 {
+    font-size: 1.4rem;
+    margin: 10px 0 10px 0;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+}
+
+.task-description {
+  max-height: 50px;
+  overflow: hidden;
+  opacity: 0.8;
+  transition:
+    max-height 0.5s ease,
+    opacity 0.3s ease;
+}
+
+.task-description.expanded {
+  max-height: 1000px;
+  opacity: 1;
+  transition:
+    max-height 0.5s ease,
+    opacity 0.5s ease;
+}

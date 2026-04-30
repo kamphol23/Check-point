@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import "./AddList.css";
+import "./styling/AddList.css";
 import { addList } from "../api/addToDb";
 import { data } from "react-router-dom";
 

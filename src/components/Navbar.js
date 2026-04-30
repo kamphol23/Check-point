@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import "./Navbar.css";
+import "./styling/Navbar.css";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +23,7 @@ function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   const burgerClass = isOpen ? "burger open" : "burger";
   const menuClass = isOpen ? "menu open" : "menu";
 
