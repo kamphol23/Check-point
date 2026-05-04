@@ -1,0 +1,7 @@
+.task-text {
+  color: gray;
+  margin-left: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  text-transform: uppercase;
+}

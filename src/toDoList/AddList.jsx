@@ -1,7 +1,10 @@
 import React from "react";
 import { useState } from "react";
+
 import { AiOutlineFileAdd } from "react-icons/ai";
 import "./styling/AddList.css";
+import Button from "../components/Button";
+
 import { addList } from "../api/addToDb";
 import { data } from "react-router-dom";
 
@@ -35,10 +38,9 @@ function AddList({ handleListAdded }) {
   return (
     <div>
       {!showForm && (
-        <button onClick={() => setShowForm(true)} className='openForm-btn'>
-          Create
-          <AiOutlineFileAdd />
-        </button>
+        <Button style='callToAction' onClick={() => setShowForm(true)}>
+          Ctreate <AiOutlineFileAdd />
+        </Button>
       )}
 
       {showForm && (
@@ -59,9 +61,9 @@ function AddList({ handleListAdded }) {
               required
               className='addList-input'
             />
-            <button type='submit' className='addList-btn'>
+            <Button type='submit' style='callToAction'>
               Add List
-            </button>
+            </Button>
           </div>
         </form>
       )}

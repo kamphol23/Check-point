@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { addTask } from "../api/addToDb";
+
 import "./styling/AddTask.css";
+
 import Button from "../components/Button";
 import { Form } from "react-router-dom";
 
@@ -35,11 +37,9 @@ function AddTask({ setTasks, listId }) {
   };
   return (
     <div>
-      <Button
-        style='callToAction'
-        text={"Add new task"}
-        onClick={() => toggleModal()}
-      />
+      <Button style='callToAction' onClick={() => toggleModal()}>
+        Add new task
+      </Button>
 
       {isModalOpen && (
         <div className='modal'>
@@ -72,7 +72,9 @@ function AddTask({ setTasks, listId }) {
             </div>
 
             <div className='addTaskBtnWrapper'>
-              <Button style='callToAction' text={"Save"} type='submit' />
+              <Button style='callToAction' type='submit'>
+                Save
+              </Button>
             </div>
           </form>
         </div>

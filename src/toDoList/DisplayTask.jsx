@@ -1,5 +1,7 @@
 import "./styling/DisplayTask.css";
 import Button from "../components/Button";
+import TaskDescription from "../components/TaskDescription";
+
 import { useState } from "react";
 
 function DisplayTask({
@@ -63,13 +65,17 @@ function DisplayTask({
             ) : (
               <>
                 <h3>{task.title}</h3>
-                <p>{task.description.substring(0, 50)}</p>
+                <TaskDescription text={task.description} />
                 <div className='task-buttons'>
-                  <button onClick={() => completedHandler(task)}>
+                  <Button onClick={() => completedHandler(task)} style='save'>
                     Mark as Completed
-                  </button>
-                  <button onClick={() => deleteHandler(task.id)}>Delete</button>
-                  <button onClick={() => handleEditClick(task)}>Edit</button>
+                  </Button>
+                  <Button onClick={() => deleteHandler(task.id)} style='delete'>
+                    Delete
+                  </Button>
+                  <Button onClick={() => handleEditClick(task)} style='edit'>
+                    Edit
+                  </Button>
                 </div>
               </>
             )}

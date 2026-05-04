@@ -1,9 +1,9 @@
 import "./styling/Button.css";
 
-function Button({ text, onClick, type = "button", style = "primary" }) {
+function Button({ onClick, type = "button", style = "primary", children }) {
   return (
     <button className={`btn ${style}`} onClick={onClick} type={type}>
-      {text}
+      {children}
     </button>
   );
 }
