@@ -84,10 +84,6 @@ a {
   justify-content: right;
 }
 
-.trashcan:hover {
-  background-color: #f0f0f0;
-  font-size: 1.7rem;
-}
 .list-link {
   background-color: #1f1f21;
   padding: 0.5rem;

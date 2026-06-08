@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GoTrash } from "react-icons/go";
-
+import "./styling/TodoList.css";
 import AddList from "./AddList";
 import { getMemberLists } from "../api/lists";
 import { deleteList, deleteListMembers, deleteAllTasks } from "../api/delete";

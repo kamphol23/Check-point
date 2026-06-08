@@ -126,6 +126,7 @@ function ListDetail() {
                 CompletedTask={completed}
                 completedHandler={completedHandler}
                 deleteHandler={deleteHandler}
+                updateTaskHandler={updateTaskHandler}
               />
             </div>
             <div>
@@ -133,6 +134,7 @@ function ListDetail() {
                 CompletedTask={completed}
                 completedHandler={completedHandler}
                 deleteHandler={deleteHandler}
+                updateTaskHandler={updateTaskHandler}
               />
             </div>
           </div>

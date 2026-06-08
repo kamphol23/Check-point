@@ -28,7 +28,6 @@
 
 .task:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 h2 {
   margin-bottom: 15px;
@@ -48,6 +47,11 @@ h2 {
   display: flex;
   gap: 8px;
   justify-content: right;
+  button {
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+  }
 }
 
 /* Edit list name */
