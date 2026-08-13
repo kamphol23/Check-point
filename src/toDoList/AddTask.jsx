@@ -9,11 +9,14 @@ import { Form } from "react-router-dom";
 function AddTask({ setTasks, listId }) {
   const [newTask, setNewTask] = useState("");
   const [newDescription, setNewDescription] = useState("");
+  const [newPoints, setNewPoints] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleTaskChange = (event) => setNewTask(event.target.value);
   const handleDescriptionChange = (event) =>
     setNewDescription(event.target.value);
+  const handlePointsChange = (event) =>
+    setNewPoints(parseInt(event.target.value) || 0);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -23,12 +26,13 @@ function AddTask({ setTasks, listId }) {
       return;
     }
     try {
-      const data = await addTask(newTask, listId, newDescription);
+      const data = await addTask(newTask, listId, newDescription, newPoints);
       console.log(data);
 
       setTasks((prevTasks) => [...prevTasks, data[0]]);
       setNewTask("");
       setNewDescription("");
+      setNewPoints();
       toggleModal();
     } catch (error) {
       console.error("Error adding task:", error);
@@ -36,7 +40,7 @@ function AddTask({ setTasks, listId }) {
     }
   };
   return (
-    <div>
+    <div className='add-task-container'>
       <Button style='callToAction' onClick={() => toggleModal()}>
         Add new task
       </Button>
@@ -68,6 +72,14 @@ function AddTask({ setTasks, listId }) {
                     createTask(e);
                   }
                 }}
+              />
+
+              <p>Poäng</p>
+              <input
+                type='number'
+                placeholder='Enter points...'
+                value={newPoints}
+                onChange={handlePointsChange}
               />
             </div>
 

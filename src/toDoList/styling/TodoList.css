@@ -52,6 +52,7 @@
 }
 
 .owned-list-item:hover {
+  transform: translateY(-2px);
   cursor: pointer;
   button {
     display: block;
@@ -62,6 +63,7 @@
   }
 }
 .member-list-item:hover {
+  transform: translateY(-2px);
   .member-list-background {
     background-color: #546749;
   }

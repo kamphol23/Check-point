@@ -121,15 +121,7 @@ function ListDetail() {
             />
           </div>
           <div>
-            <div>
-              <CompletedTask
-                CompletedTask={completed}
-                completedHandler={completedHandler}
-                deleteHandler={deleteHandler}
-                updateTaskHandler={updateTaskHandler}
-              />
-            </div>
-            <div>
+            <div className='completedTask-wrapper'>
               <CompletedTask
                 CompletedTask={completed}
                 completedHandler={completedHandler}

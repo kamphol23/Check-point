@@ -3,43 +3,55 @@
   margin: auto;
   margin-top: 20px;
   width: 80%;
-  border: solid 2px gray;
-  border-radius: 8px;
+  border-top: solid 1px #cfcfcf;
+
   padding: 30px;
 }
 
 .task-contanier {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  column-gap: var(--ds-space-240, 400px);
 }
 
 .completedTask-wrapper {
   text-align: left;
   width: 500px;
   letter-spacing: 1.2px;
+  max-height: 970px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.completedTask-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .task {
-  background: #f9fafb;
   padding: 15px;
   box-shadow: #555;
   margin-bottom: 10px;
-  transition: all 0.2s ease;
+  transition: all 0.22s ease;
 }
 
 .task:hover {
   transform: translateY(-2px);
+  box-shadow: #555 2px 2px 8px;
+  border-radius: 8px;
 }
+
 h2 {
   margin-bottom: 15px;
   font-size: 20px;
-  border-bottom: 2px solid #eee;
+  border-bottom: 1px solid #cfcfcf;
   padding-bottom: 5px;
 }
 
 /* Task title */
 .task h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 /* Buttons wrapper */

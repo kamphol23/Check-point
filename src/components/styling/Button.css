@@ -6,6 +6,7 @@ button {
   border-radius: 8px;
   transition: all 0.3s ease;
   color: #ecf0f1;
+  background-color: transparent;
 }
 button:hover {
   transform: translateY(-2px);
@@ -28,7 +29,7 @@ button:hover {
 }
 
 .btn.callToAction:hover {
-  background-color: #a44a3f;
+  background-color: #f7f3ea;
   color: #ecf0f1;
   transition: 0.2ms;
 }
@@ -67,6 +68,18 @@ button:hover {
 
 .btn.icon {
   background-color: transparent;
-  color: #232b1e;
+  color: black;
+  opacity: 0.3;
+  font-size: 1.5rem;
+}
+
+.btn.icon:hover {
+  opacity: 1;
+  color: black;
+}
+
+.btn.icon-done {
+  color: #397b12;
+
   font-size: 1.5rem;
 }

@@ -5,7 +5,7 @@ import "./styling/TodoList.css";
 import AddList from "./AddList";
 import { getMemberLists } from "../api/lists";
 import { deleteList, deleteListMembers, deleteAllTasks } from "../api/delete";
-
+import Button from "../components/Button";
 function Lists() {
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -78,9 +78,11 @@ function Lists() {
                 isOwner.map((list) => (
                   <div key={list.list_id} className='owned-list-item'>
                     <div className='btn-container'>
-                      <button onClick={() => handleDeleteList(list.list_id)}>
+                      <Button
+                        onClick={() => handleDeleteList(list.list_id)}
+                        style='icon'>
                         <GoTrash className='trashcan' />
-                      </button>
+                      </Button>
                     </div>
 
                     <Link
@@ -96,6 +98,7 @@ function Lists() {
               )}
             </div>
           </div>
+          <div className='divider'></div>
           <div className='member-lists-container'>
             <h2>Member lists</h2>
             <div className='member-lists'>

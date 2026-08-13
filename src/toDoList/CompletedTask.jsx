@@ -1,10 +1,11 @@
-import "./styling/ListDetail.css";
+import "./styling/DisplayTask.css";
 import { GoTrash } from "react-icons/go";
 import { useState } from "react";
 import Button from "../components/Button";
 import TaskDescription from "../components/TaskDescription";
 import EditTask from "../components/EditTask";
 import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineCheckBox } from "react-icons/md";
 const CompletedTask = ({
   CompletedTask,
   completedHandler,
@@ -12,10 +13,6 @@ const CompletedTask = ({
   updateTaskHandler,
 }) => {
   const [editingTask, setEditingTask] = useState(null);
-
-  if (CompletedTask.length === 0) {
-    return <p>No completed tasks yet.</p>;
-  }
 
   const handleEditClick = (task) => {
     setEditingTask(task);
@@ -30,8 +27,8 @@ const CompletedTask = ({
           <TaskDescription text={task.description} />
 
           <div className='task-buttons'>
-            <Button onClick={() => completedHandler(task)}>
-              Mark as Not Completed
+            <Button onClick={() => completedHandler(task)} style='icon-done'>
+              <MdOutlineCheckBox />
             </Button>
             <Button onClick={() => deleteHandler(task.id)} style='icon'>
               <GoTrash />
