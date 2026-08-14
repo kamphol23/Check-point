@@ -40,12 +40,12 @@ function Navbar() {
       <div className={menuClass}>
         <ul>
           <li>
-            <Link to='/' onClick={toggleMenu}>
+            <Link to='/HomePage' onClick={toggleMenu}>
               Home
             </Link>
           </li>
           <li>
-            <Link to='/Todo' onClick={toggleMenu}>
+            <Link to='/todo' onClick={toggleMenu}>
               Dashboard
             </Link>
           </li>

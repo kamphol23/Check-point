@@ -1,6 +1,6 @@
 import Lists from "./toDoList/Lists";
 import logIn from "./api/auth";
-
+import HomePage from "./Home/homePage";
 import ListDetail from "./toDoList/ListDetail";
 
 import Navbar from "./components/Navbar";
@@ -19,7 +19,7 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path='/' element={<h2>Home Page</h2>} />
+          <Route path='/HomePage' element={<HomePage />} />
           <Route path='/todo' element={<Lists />} />
           <Route path='/ListDetail/:id' element={<ListDetail />} />
         </Routes>
