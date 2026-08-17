@@ -49,7 +49,14 @@ export const addListMember = async (listId, userId, listName) => {
 };
 
 //add a task to the database by task name, list id and description
-export const addTask = async (taskName, listId, description, points) => {
+export const addTask = async (
+  taskName,
+  listId,
+  description,
+  points,
+  taskDay,
+  assignedTo,
+) => {
   const { data, error } = await supabase
     .from("todos")
     .insert([
@@ -58,6 +65,8 @@ export const addTask = async (taskName, listId, description, points) => {
         list_id: listId,
         description: description,
         points: points,
+        taskDay: taskDay,
+        assigned_to: assignedTo,
       },
     ])
     .select();

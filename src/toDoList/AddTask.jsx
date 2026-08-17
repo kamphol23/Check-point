@@ -10,6 +10,8 @@ function AddTask({ setTasks, listId }) {
   const [newTask, setNewTask] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [newPoints, setNewPoints] = useState(null);
+  const [newTaskDay, setNewTaskDay] = useState("");
+  const [newAssignedTo, setNewAssignedTo] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleTaskChange = (event) => setNewTask(event.target.value);
@@ -18,6 +20,9 @@ function AddTask({ setTasks, listId }) {
   const handlePointsChange = (event) =>
     setNewPoints(parseInt(event.target.value) || 0);
 
+  const handleTaskDayChange = (event) => setNewTaskDay(event.target.value);
+  const handleAssignedToChange = (event) =>
+    setNewAssignedTo(event.target.value);
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const createTask = async (e) => {
@@ -26,13 +31,22 @@ function AddTask({ setTasks, listId }) {
       return;
     }
     try {
-      const data = await addTask(newTask, listId, newDescription, newPoints);
+      const data = await addTask(
+        newTask,
+        listId,
+        newDescription,
+        newPoints,
+        newTaskDay,
+        newAssignedTo,
+      );
       console.log(data);
 
       setTasks((prevTasks) => [...prevTasks, data[0]]);
       setNewTask("");
       setNewDescription("");
-      setNewPoints();
+      setNewPoints(null);
+      setNewTaskDay("");
+      setNewAssignedTo("");
       toggleModal();
     } catch (error) {
       console.error("Error adding task:", error);
@@ -74,12 +88,28 @@ function AddTask({ setTasks, listId }) {
                 }}
               />
 
-              <p>Poäng</p>
+              <h3>Points</h3>
               <input
                 type='number'
                 placeholder='Enter points...'
                 value={newPoints}
                 onChange={handlePointsChange}
+              />
+
+              <h3>Day the task is due</h3>
+              <input
+                type='date'
+                placeholder='Select a date...'
+                value={newTaskDay}
+                onChange={handleTaskDayChange}
+              />
+
+              <h3>Assign to</h3>
+              <input
+                type='text'
+                placeholder='Assign to...'
+                value={newAssignedTo}
+                onChange={handleAssignedToChange}
               />
             </div>
 

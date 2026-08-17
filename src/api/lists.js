@@ -7,7 +7,7 @@ const user = await logIn();
 export const getMemberLists = async () => {
   const { data: list, error } = await supabase
     .from("list_members")
-    .select("list_id, list_name, isOwner")
+    .select("*")
     .eq("user_id", user.id);
 
   if (error) throw error;
@@ -18,7 +18,7 @@ export const getMemberLists = async () => {
 export const getListMembers = async (listId) => {
   const { data: members, error } = await supabase
     .from("list_members")
-    .select("user_id, list_name, list_id")
+    .select("*")
     .eq("list_id", listId);
 
   if (error) throw error;
