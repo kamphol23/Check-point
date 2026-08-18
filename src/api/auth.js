@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import supabase from "./supabaseClient";
 
 let userData = null;

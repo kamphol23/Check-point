@@ -1,7 +1,11 @@
 import React from "react";
 import "./styling/ListDisplay.css";
+import { useState, useEffect } from "react";
+import { getTodayStats } from "../api/lists";
 
 const ListDisplay = ({ lists }) => {
+  const [availablePointsAndTasks, setAvailablePointsAndTasks] = useState({});
+
   const getGoalProgress = (points, wantedRewardPoints) => {
     if (!wantedRewardPoints || wantedRewardPoints === 0) {
       return 0;
@@ -12,6 +16,24 @@ const ListDisplay = ({ lists }) => {
     return Math.min(progress, 100).toFixed(2);
   };
 
+  useEffect(() => {
+    const fetchAvailablePoints = async () => {
+      try {
+        const data = await Promise.all(
+          lists.map(async (list) => {
+            const points = await getTodayStats(list.list_id);
+            return { listId: list.list_id, points };
+          }),
+        );
+        setAvailablePointsAndTasks(data);
+      } catch (error) {
+        console.error("Error fetching available points:", error);
+      }
+    };
+    fetchAvailablePoints();
+  }, [lists]);
+
+  console.log("availablePointsAndTasks", availablePointsAndTasks);
   return (
     <div className='list-display'>
       {lists.map((list) => {
@@ -22,13 +44,19 @@ const ListDisplay = ({ lists }) => {
 
             <div className='list-tasks'>
               <span>Dagens uppgifter</span>
-              <strong>3 uppgifter</strong>
+              <strong>
+                {availablePointsAndTasks.find((p) => p.listId === list.list_id)
+                  ?.points.task_count ?? 0}
+              </strong>
             </div>
 
             <div className='list-points'>
               <span>⭐</span>
-              <strong>{list.points ?? 0}</strong>
-              <span>poäng</span>
+              <strong>
+                {availablePointsAndTasks.find((p) => p.listId === list.list_id)
+                  ?.points.available_points ?? 0}
+              </strong>
+              <span>poäng att tjäna idag</span>
             </div>
 
             <div className='list-goal'>
