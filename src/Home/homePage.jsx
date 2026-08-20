@@ -2,6 +2,7 @@ import React from "react";
 import "./homePage.css";
 import Lists from "../toDoList/Lists";
 import { getMemberLists } from "../api/lists";
+import { getGoals } from "../api/goals";
 import { useState, useEffect } from "react";
 import ListDisplay from "../components/ListDisplay";
 
@@ -9,11 +10,15 @@ function HomePage() {
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [goals, setGoals] = useState([]);
 
   useEffect(() => {
     const fetchLists = async () => {
       try {
         const data = await getMemberLists();
+        const goalsData = await getGoals();
+
+        setGoals(goalsData);
         setLists(data);
       } catch (error) {
         console.error("Error fetching lists:", error);
@@ -24,7 +29,7 @@ function HomePage() {
     };
     fetchLists();
   }, []);
-  console.log("lists", lists);
+  console.log("Goals:", goals);
   return (
     <div className='homePage'>
       <div className='homePage-header'>
@@ -51,7 +56,14 @@ function HomePage() {
       <ListDisplay lists={lists} />
       <div className='personal-goal'>
         <h1>Personligt mål</h1>
-        <p>Här kan du se hur nära du är att nå ditt mål</p>
+        <p>
+          {goals.length > 0
+            ? `Du har ${goals.length} personliga mål`
+            : "Du har inga personliga mål"}
+        </p>
+        <h2>{goals.length > 0 && goals[0].title}</h2>
+        <p>{goals.length > 0 && goals[0].description}</p>
+        <p>{goals.length > 0 && `Poäng: ${goals[0].points}`}</p>
       </div>
     </div>
   );

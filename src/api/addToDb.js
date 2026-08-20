@@ -65,7 +65,7 @@ export const addTask = async (
         list_id: listId,
         description: description,
         points: points,
-        taskDay: taskDay,
+        due_date: taskDay,
         assigned_to: assignedTo,
       },
     ])
