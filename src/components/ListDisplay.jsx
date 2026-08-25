@@ -1,6 +1,7 @@
 import React from "react";
 import "./styling/ListDisplay.css";
 import { useState, useEffect } from "react";
+
 import { getTodayStats } from "../api/lists";
 import { Link } from "react-router-dom";
 
@@ -34,7 +35,6 @@ const ListDisplay = ({ lists }) => {
     fetchAvailablePoints();
   }, [lists]);
 
-  console.log("availablePointsAndTasks", availablePointsAndTasks);
   return (
     <div className='list-display'>
       {lists.map((list) => {

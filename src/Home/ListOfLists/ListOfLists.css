@@ -1,0 +1,122 @@
+.group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.group-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 18px 20px;
+
+  background: #fff;
+  border: 1px solid #e8ecff;
+  border-radius: 16px;
+
+  text-decoration: none;
+  color: inherit;
+
+  transition: all 0.2s ease;
+}
+
+.group-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.group-icon {
+  width: 56px;
+  height: 56px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 26px;
+
+  flex-shrink: 0;
+}
+
+.group-color-1 {
+  background: #dff1ff;
+}
+
+.group-color-2 {
+  background: #efe1ff;
+}
+
+.group-color-3 {
+  background: #dcf7df;
+}
+
+.group-info {
+  flex: 1;
+}
+
+.group-info h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.group-card:nth-child(1) h3 {
+  color: #2f6df6;
+}
+
+.group-card:nth-child(2) h3 {
+  color: #7c4dff;
+}
+
+.group-card:nth-child(3) h3 {
+  color: #2ea84f;
+}
+
+.group-stats {
+  text-align: right;
+}
+
+.group-stats p {
+  margin: 0 0 8px;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.group-points {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.group-arrow {
+  font-size: 2rem;
+  color: #9ca3af;
+  margin-left: 10px;
+}
+
+.all-groups-btn {
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 56px;
+
+  border-radius: 14px;
+
+  background: #f7f5ff;
+
+  color: #5b4df0;
+  text-decoration: none;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.all-groups-btn:hover {
+  background: #efebff;
+}

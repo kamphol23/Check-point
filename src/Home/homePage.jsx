@@ -1,11 +1,12 @@
-import React from "react";
-import "./homePage.css";
-import Lists from "../toDoList/Lists";
-import { getMemberLists } from "../api/lists";
-import { getGoals } from "../api/goals";
 import { useState, useEffect } from "react";
-import ListDisplay from "../components/ListDisplay";
+import "./homePage.css";
 
+import HomeNav from "../Home/HomeNav";
+import PersonalGoal from "./PersonalGoal/PersonalGoal";
+import ListOfLists from "./ListOfLists/ListOfLists";
+
+import { getGoals } from "../api/goals";
+import { getMemberLists } from "../api/lists";
 function HomePage() {
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,23 +38,9 @@ function HomePage() {
         <p>Här kan du se översikt</p>
       </div>
 
-      <div className='tracker-section'>
-        <div className='tracker-text'>
-          <p>Den här veckan</p>
-        </div>
+      <HomeNav />
 
-        <div className='tracker-container'>
-          <div>
-            <h2>20</h2>
-            <p>Klara uppgifter</p>
-          </div>
-          <div>
-            <h2>300</h2>
-            <p>Intjänade poäng</p>
-          </div>
-        </div>
-      </div>
-      <ListDisplay lists={lists} />
+      <ListOfLists lists={lists} />
       <div className='personal-goal'>
         <h1>Personligt mål</h1>
         <p>
