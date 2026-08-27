@@ -39,18 +39,9 @@ function HomePage() {
       </div>
 
       <HomeNav />
-
-      <ListOfLists lists={lists} />
-      <div className='personal-goal'>
-        <h1>Personligt mål</h1>
-        <p>
-          {goals.length > 0
-            ? `Du har ${goals.length} personliga mål`
-            : "Du har inga personliga mål"}
-        </p>
-        <h2>{goals.length > 0 && goals[0].title}</h2>
-        <p>{goals.length > 0 && goals[0].description}</p>
-        <p>{goals.length > 0 && `Poäng: ${goals[0].points}`}</p>
+      <div className='homePage-lists-goals'>
+        <ListOfLists lists={lists} />
+        <PersonalGoal goals={goals} />
       </div>
     </div>
   );

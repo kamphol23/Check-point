@@ -35,6 +35,9 @@ function ListOfLists({ lists }) {
 
   return (
     <div className='group-list'>
+      <div className='group-list-header'>
+        <h3>Mina grupper</h3>
+      </div>
       {lists.map((list, index) => {
         const stats = getStats(list.list_id);
 
@@ -43,10 +46,6 @@ function ListOfLists({ lists }) {
             key={list.list_id}
             to={`/lists/${list.list_id}`}
             className='group-card'>
-            <div className={`group-icon group-color-${(index % 3) + 1}`}>
-              {index === 0 ? "🏠" : index === 1 ? "🏫" : "💼"}
-            </div>
-
             <div className='group-info'>
               <h3>{list.list_name}</h3>
             </div>
@@ -64,7 +63,7 @@ function ListOfLists({ lists }) {
         );
       })}
 
-      <Link to='/lists' className='all-groups-btn'>
+      <Link to='/todo' className='all-groups-btn'>
         Gå till mina grupper →
       </Link>
     </div>

@@ -1,0 +1,156 @@
+.personal-goal {
+  background: #fff;
+  border: 2px solid #e8ecff;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.personal-goal-header {
+  text-align: left;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.show-all-btn {
+  border: none;
+  background: transparent;
+  color: #5b4df0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.goal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.goal-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px;
+
+  border: 1px solid #ececec;
+  border-radius: 14px;
+
+  background: #fff;
+
+  transition: all 0.2s ease;
+}
+.goal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.goal-icon {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 28px;
+
+  flex-shrink: 0;
+}
+
+.goal-color-1 {
+  background: #e8f8e8;
+}
+
+.goal-color-2 {
+  background: #f1e8ff;
+}
+
+.goal-color-3 {
+  background: #fff3dd;
+}
+
+.goal-content {
+  flex: 1;
+}
+
+.goal-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.goal-top h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.goal-top span {
+  color: #666;
+}
+
+.goal-right {
+  text-align: right;
+}
+
+.goal-right strong {
+  display: block;
+  font-size: 1.4rem;
+}
+
+.goal-right span {
+  color: #22a447;
+  font-weight: 600;
+}
+
+.goal-progress {
+  width: 100%;
+  height: 8px;
+
+  background: #ececec;
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.goal-progress-bar {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.goal-progress-bar.goal-color-1 {
+  background: #34a853;
+}
+
+.goal-progress-bar.goal-color-2 {
+  background: #7c4dff;
+}
+
+.goal-progress-bar.goal-color-3 {
+  background: #f6a026;
+}
+
+.all-goals-btn {
+  width: 100%;
+  margin-top: 16px;
+
+  height: 52px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #f7f5ff;
+
+  color: #5b4df0;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.group-arrow {
+  font-size: 2rem;
+  color: #9ca3af;
+  margin-left: 10px;
+}
