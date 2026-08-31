@@ -29,14 +29,16 @@
 .goal-card {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
 
-  padding: 16px;
-
-  border: 1px solid #ececec;
-  border-radius: 14px;
+  padding: 18px 20px;
 
   background: #fff;
+  border: 1px solid #e8ecff;
+  border-radius: 16px;
+
+  text-decoration: none;
+  color: inherit;
 
   transition: all 0.2s ease;
 }

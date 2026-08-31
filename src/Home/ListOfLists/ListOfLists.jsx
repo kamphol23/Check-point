@@ -44,7 +44,7 @@ function ListOfLists({ lists }) {
         return (
           <Link
             key={list.list_id}
-            to={`/lists/${list.list_id}`}
+            to={`/ListDetail/${list.list_id}`}
             className='group-card'>
             <div className='group-info'>
               <h3>{list.list_name}</h3>

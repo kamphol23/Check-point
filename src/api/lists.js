@@ -28,11 +28,12 @@ export const getListMembers = async (listId) => {
 };
 
 export const getTodayStats = async (listId) => {
-  const { data, error } = await supabase.rpc("get_today_stats", {
-    p_assigned_to: "kamphol",
-    p_list_id: listId,
-  });
+  const { data, error } = await supabase
+    .from("todos")
+    .select("*")
+    .eq("assigned_user_username", "kamphol");
 
   if (error) throw error;
+
   return data;
 };

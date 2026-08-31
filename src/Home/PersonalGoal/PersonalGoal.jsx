@@ -16,8 +16,8 @@ function PersonalGoal({ goals }) {
         <div className='goal-list'>
           {goals.map((goal, index) => {
             const progress = getProgress(
-              goal.amount_done,
-              goal.days_of_week.length,
+              goal.currently === null ? 0 : goal.currently,
+              goal.target.length,
             );
 
             return (
@@ -28,8 +28,8 @@ function PersonalGoal({ goals }) {
                       <h3>{goal.title}</h3>
 
                       <span>
-                        {goal.days_of_week.length} /
-                        {goal.amount_done === null ? 0 : goal.amount_done}
+                        {goal.target.length} /
+                        {goal.currently === null ? 0 : goal.currently}
                       </span>
                     </div>
 

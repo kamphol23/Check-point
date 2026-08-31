@@ -66,7 +66,7 @@ export const addTask = async (
         description: description,
         points: points,
         due_date: taskDay,
-        assigned_to: assignedTo,
+        assigned_user_username: assignedTo,
       },
     ])
     .select();

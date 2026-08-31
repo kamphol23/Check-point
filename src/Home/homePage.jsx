@@ -4,6 +4,7 @@ import "./homePage.css";
 import HomeNav from "../Home/HomeNav";
 import PersonalGoal from "./PersonalGoal/PersonalGoal";
 import ListOfLists from "./ListOfLists/ListOfLists";
+import History from "./History/History";
 
 import { getGoals } from "../api/goals";
 import { getMemberLists } from "../api/lists";
@@ -30,7 +31,7 @@ function HomePage() {
     };
     fetchLists();
   }, []);
-  console.log("Goals:", goals);
+
   return (
     <div className='homePage'>
       <div className='homePage-header'>
@@ -43,6 +44,7 @@ function HomePage() {
         <ListOfLists lists={lists} />
         <PersonalGoal goals={goals} />
       </div>
+      <History />
     </div>
   );
 }
