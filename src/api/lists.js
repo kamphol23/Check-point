@@ -27,6 +27,7 @@ export const getListMembers = async (listId) => {
   return members;
 };
 
+// get the todo that user are assigned to
 export const getTodayStats = async (listId) => {
   const { data, error } = await supabase
     .from("todos")

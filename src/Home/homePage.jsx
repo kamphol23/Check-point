@@ -5,6 +5,7 @@ import HomeNav from "../Home/HomeNav";
 import PersonalGoal from "./PersonalGoal/PersonalGoal";
 import ListOfLists from "./ListOfLists/ListOfLists";
 import History from "./History/History";
+import WorkingOn from "./WorkingOn/WorkingOn";
 
 import { getGoals } from "../api/goals";
 import { getMemberLists } from "../api/lists";
@@ -44,7 +45,10 @@ function HomePage() {
         <ListOfLists lists={lists} />
         <PersonalGoal goals={goals} />
       </div>
-      <History />
+      <div className='homePage-history-workingOn'>
+        <WorkingOn lists={lists} />
+        <History />
+      </div>
     </div>
   );
 }

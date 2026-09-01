@@ -1,5 +1,7 @@
 import { getActivity } from "../../api/activityLog";
 import { useEffect, useState } from "react";
+import "./History.css";
+
 const History = () => {
   const [activities, setActivities] = useState([]);
 
@@ -15,7 +17,6 @@ const History = () => {
 
     fetchActivities();
   }, []);
-  console.log(activities);
 
   function getTimeAgo(dateString) {
     const now = new Date();
@@ -23,7 +24,7 @@ const History = () => {
 
     const diffMinutes = Math.floor((now - date) / 1000 / 60);
 
-    if (diffMinutes < 1) return "just nu";
+    if (diffMinutes < 1) return "Just nu";
     if (diffMinutes < 60) return `${diffMinutes} min sedan`;
 
     const diffHours = Math.floor(diffMinutes / 60);
@@ -33,32 +34,68 @@ const History = () => {
     return `${diffDays} dagar sedan`;
   }
 
-  const formatActivity = (activity) => {
+  const getActivityInfo = (activity) => {
     switch (activity.action_type) {
       case "task_created":
-        return `📝 ${activity.user_username} skapade "${activity.entity_name}"   ${getTimeAgo(activity.create_at)}`;
+        return {
+          icon: "📝",
+          text: `${activity.user_username} skapade "${activity.entity_name}"`,
+        };
 
       case "task_updated":
-        return `✏️ ${activity.user_username} uppdaterade "${activity.entity_name}"`;
+        return {
+          icon: "✏️",
+          text: `${activity.user_username} uppdaterade "${activity.entity_name}"`,
+        };
 
       case "task_completed":
-        return `✅ ${activity.user_username} slutförde "${activity.entity_name}"`;
+        return {
+          icon: "✅",
+          text: `${activity.user_username} slutförde "${activity.entity_name}"`,
+        };
 
       case "points_earned":
-        return `⭐ ${activity.user_username} tjänade ${activity.points} poäng`;
+        return {
+          icon: "⭐",
+          text: `${activity.user_username} tjänade ${activity.points} poäng`,
+        };
 
       default:
-        return "Aktivitet";
+        return {
+          icon: "🔔",
+          text: "Ny aktivitet",
+        };
     }
   };
 
   return (
     <div className='history'>
-      <h1>History</h1>
+      <div className='history-header'>
+        <h2>📋 Senaste aktivitet</h2>
+        <span>{activities.length} händelser</span>
+      </div>
 
-      {activities.map((activity) => {
-        return <div key={activity.id}>{formatActivity(activity)}</div>;
-      })}
+      <div className='history-list'>
+        {activities.map((activity) => {
+          const info = getActivityInfo(activity);
+
+          return (
+            <div key={activity.id} className='history-item'>
+              <div className='history-icon'>{info.icon}</div>
+
+              <div className='history-content'>
+                <p>{info.text}</p>
+
+                <div className='history-meta'>
+                  <span>{activity.list_name}</span>
+                  <span>•</span>
+                  <span>{getTimeAgo(activity.create_at)}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
