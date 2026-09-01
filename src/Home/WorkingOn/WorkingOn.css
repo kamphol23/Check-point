@@ -4,6 +4,7 @@
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  height: fit-content;
   h2 {
     text-decoration: none;
   }
