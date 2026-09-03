@@ -7,6 +7,8 @@ import PersonalGoal from "./PersonalGoal/PersonalGoal";
 import ListOfLists from "./ListOfLists/ListOfLists";
 import History from "./History/History";
 import WorkingOn from "./WorkingOn/WorkingOn";
+import RewardDisplay from "./RewardDisplay/RewardDisplay";
+import ListOfRewards from "./RewardDisplay/ListOfRewards";
 
 import { getGoals } from "../api/goals";
 import { getMemberLists } from "../api/lists";
@@ -65,14 +67,20 @@ function HomePage() {
       <section className='homePage-nav'>
         <HomeNav lists={lists} />
       </section>
-
+      <section className='homePage-rewards'>
+        <RewardDisplay lists={lists} />
+      </section>
       <section className='homePage-top'>
         <ListOfLists lists={lists} />
         <PersonalGoal goals={goals} />
       </section>
 
       <section className='homePage-bottom'>
-        <WorkingOn lists={lists} />
+        <div className='homePage-bottom-left'>
+          <WorkingOn lists={lists} />
+          <ListOfRewards lists={lists} />
+        </div>
+
         <History />
       </section>
     </div>

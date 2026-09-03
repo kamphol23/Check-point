@@ -41,7 +41,7 @@ const ListDisplay = ({ lists }) => {
         const progress = getGoalProgress(list.points, list.wantedRewardCost);
         return (
           <Link
-            key={list.list_id}
+            id={list.list_id}
             to={`/ListDetail/${list.list_id}`}
             state={{ ListTitle: list.list_name }}
             className='list-display-link'>
