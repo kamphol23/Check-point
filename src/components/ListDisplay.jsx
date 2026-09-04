@@ -1,92 +1,95 @@
-import React from "react";
-import "./styling/ListDisplay.css";
 import { useState, useEffect } from "react";
-
-import { getTodayStats } from "../api/lists";
 import { Link } from "react-router-dom";
 
+import { getTodayStats } from "../api/lists";
+
+import "./styling/ListDisplay.css";
+
 const ListDisplay = ({ lists }) => {
-  const [availablePointsAndTasks, setAvailablePointsAndTasks] = useState({});
-
-  const getGoalProgress = (points, wantedRewardPoints) => {
-    if (!wantedRewardPoints || wantedRewardPoints === 0) {
-      return 0;
-    }
-
-    const progress = (points / wantedRewardPoints) * 100;
-
-    return Math.min(progress, 100).toFixed(2);
-  };
+  const [todayStats, setTodayStats] = useState([]);
 
   useEffect(() => {
-    const fetchAvailablePoints = async () => {
+    const fetchTodayStats = async () => {
       try {
         const data = await Promise.all(
-          lists.map(async (list) => {
-            const points = await getTodayStats(list.list_id);
-            return { listId: list.list_id, points };
-          }),
+          lists.map(async (list) => ({
+            listId: list.list_id,
+            stats: await getTodayStats(list.list_id),
+          })),
         );
-        setAvailablePointsAndTasks(data);
+
+        setTodayStats(data);
       } catch (error) {
-        console.error("Error fetching available points:", error);
+        console.error("Error fetching stats:", error);
       }
     };
-    fetchAvailablePoints();
+
+    if (lists.length) {
+      fetchTodayStats();
+    }
   }, [lists]);
+
+  const getGoalProgress = (currentPoints, targetPoints) => {
+    if (!targetPoints) return 0;
+
+    return Math.min((currentPoints / targetPoints) * 100, 100);
+  };
 
   return (
     <div className='list-display'>
-      {lists.map((list) => {
-        const progress = getGoalProgress(list.points, list.wantedRewardCost);
+      {lists.slice(0, 3).map((list) => {
+        const stats =
+          todayStats.find((item) => item.listId === list.list_id)?.stats || {};
+
+        const progress = getGoalProgress(
+          list.points || 0,
+          list.wantedRewardCost || 0,
+        );
+
         return (
           <Link
-            id={list.list_id}
+            key={list.list_id}
             to={`/ListDetail/${list.list_id}`}
-            state={{ ListTitle: list.list_name }}
+            state={{
+              ListTitle: list.list_name,
+            }}
             className='list-display-link'>
             <div className='list-display-item'>
+              <div className='list-card-arrow'>→</div>
+
               <h3>{list.list_name}</h3>
 
               <div className='list-tasks'>
                 <span>Dagens uppgifter</span>
-                <strong>
-                  {availablePointsAndTasks.find(
-                    (p) => p.listId === list.list_id,
-                  )?.points.task_count ?? 0}
-                </strong>
+
+                <strong>{stats.task_count || 0}</strong>
               </div>
 
               <div className='list-points'>
-                <span>⭐</span>
-                <strong>
-                  {availablePointsAndTasks.find(
-                    (p) => p.listId === list.list_id,
-                  )?.points.available_points ?? 0}
-                </strong>
-                <span>Möjliga poäng</span>
+                <strong>{stats.available_points || 0}</strong>
+
+                <span>Credits möjliga idag</span>
               </div>
 
               <div className='list-goal'>
                 <div className='goal-header'>
-                  <span>
-                    🎯 {list.wantedRewardName ?? "Ingen önskad belöning"}
-                  </span>
+                  <span>{list.wantedRewardName || "Ingen aktiv belöning"}</span>
 
-                  <span>{progress}%</span>
+                  <span>{progress.toFixed(0)}%</span>
                 </div>
 
                 <div className='goal-points'>
-                  {list.points ?? 0} / {list.wantedRewardCost ?? 0} ⭐
+                  {list.points || 0} / {list.wantedRewardCost || 0}
                 </div>
 
                 <div className='goal-progress'>
                   <div
                     className='goal-progress-bar'
-                    style={{ width: `${progress}%` }}
+                    style={{
+                      width: `${progress}%`,
+                    }}
                   />
                 </div>
-                <div className='list-card-arrow'>→</div>
               </div>
             </div>
           </Link>
