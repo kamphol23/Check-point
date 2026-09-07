@@ -70,18 +70,6 @@
   font-weight: 700;
 }
 
-.group-card:nth-child(1) h3 {
-  color: #2f6df6;
-}
-
-.group-card:nth-child(2) h3 {
-  color: #7c4dff;
-}
-
-.group-card:nth-child(3) h3 {
-  color: #2ea84f;
-}
-
 .group-stats {
   text-align: right;
 }

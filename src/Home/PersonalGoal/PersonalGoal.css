@@ -62,22 +62,6 @@
   flex-shrink: 0;
 }
 
-.goal-color-1 {
-  background: #e8f8e8;
-}
-
-.goal-color-2 {
-  background: #f1e8ff;
-}
-
-.goal-color-3 {
-  background: #fff3dd;
-}
-
-.goal-content {
-  flex: 1;
-}
-
 .goal-top {
   display: flex;
   justify-content: space-between;

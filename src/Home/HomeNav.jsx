@@ -7,10 +7,6 @@ function HomeNav({ lists }) {
 
   return (
     <div className='tracker-section'>
-      <div className='tracker-header'>
-        <h2>Den här veckan</h2>
-      </div>
-
       <div className='tracker-container'>
         <div className='tracker-card'>
           <h2>300</h2>

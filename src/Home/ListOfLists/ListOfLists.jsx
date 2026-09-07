@@ -53,9 +53,7 @@ function ListOfLists({ lists }) {
             <div className='group-stats'>
               <p>{stats?.task_count ?? 0} uppgifter idag</p>
 
-              <div className='group-points'>
-                ⭐ {stats?.available_points ?? 0}
-              </div>
+              <div className='group-points'>{stats?.available_points ?? 0}</div>
             </div>
 
             <div className='group-arrow'>›</div>

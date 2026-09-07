@@ -36,7 +36,7 @@ function PersonalGoal({ goals }) {
                     <div className='goal-right'>
                       <strong>{progress.toFixed(0)}%</strong>
 
-                      <span>+{goal.points} ⭐</span>
+                      <span>+{goal.points} </span>
                     </div>
                   </div>
 

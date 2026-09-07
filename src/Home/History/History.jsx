@@ -71,7 +71,7 @@ const History = () => {
   return (
     <div className='history'>
       <div className='history-header'>
-        <h2>📋 Senaste aktivitet</h2>
+        <h2> Senaste aktivitet</h2>
         <span>{activities.length} händelser</span>
       </div>
 
