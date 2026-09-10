@@ -5,3 +5,19 @@
   color: #0f172a;
   background-color: #f8fafc;
 }
+
+:root {
+  --primary: #6d5df6;
+  --primary-light: #f4f2ff;
+
+  --success: #22c55e;
+
+  --background: #f8fafc;
+
+  --card: #ffffff;
+
+  --text: #0f172a;
+  --muted: #64748b;
+
+  --border: #e2e8f0;
+}

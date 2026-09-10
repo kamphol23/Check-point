@@ -7,8 +7,8 @@ import PersonalGoal from "./PersonalGoal/PersonalGoal";
 import ListOfLists from "./ListOfLists/ListOfLists";
 import History from "./History/History";
 import WorkingOn from "./WorkingOn/WorkingOn";
-import RewardDisplay from "./RewardDisplay/RewardDisplay";
-import ListOfRewards from "./RewardDisplay/ListOfRewards";
+import RewardDisplay from "../components/RewardDisplay/RewardDisplay";
+import ListOfRewards from "../components/RewardDisplay/RewardDisplay";
 
 import { getGoals } from "../api/goals";
 import { getMemberLists } from "../api/lists";

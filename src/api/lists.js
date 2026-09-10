@@ -23,7 +23,6 @@ export const getListMembers = async (listId) => {
 
   if (error) throw error;
 
-  console.log("members", members);
   return members;
 };
 

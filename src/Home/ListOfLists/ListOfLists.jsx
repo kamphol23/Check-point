@@ -45,6 +45,9 @@ function ListOfLists({ lists }) {
           <Link
             key={list.list_id}
             to={`/ListDetail/${list.list_id}`}
+            state={{
+              ListTitle: list.list_name,
+            }}
             className='group-card'>
             <div className='group-info'>
               <h3>{list.list_name}</h3>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { addTask } from "../api/addToDb";
 
 import "./styling/AddTask.css";
+import { IoAddCircleOutline } from "react-icons/io5";
+
 import Button from "../components/Button";
 
 function AddTask({ setTasks, listId }) {
@@ -71,8 +73,9 @@ function AddTask({ setTasks, listId }) {
 
   return (
     <div className='add-task-container'>
-      <Button style='callToAction' onClick={() => setIsModalOpen(true)}>
-        Add new task
+      <Button style='add' onClick={() => setIsModalOpen(true)}>
+        <IoAddCircleOutline size={28} />
+        Add Task
       </Button>
 
       {isModalOpen && (
@@ -92,7 +95,7 @@ function AddTask({ setTasks, listId }) {
               <input
                 type='text'
                 placeholder='Enter a task'
-                value={newTask}
+                value={newTask.charAt(0).toUpperCase() + newTask.slice(1)}
                 onChange={(event) => setNewTask(event.target.value)}
                 autoFocus
               />
@@ -101,7 +104,10 @@ function AddTask({ setTasks, listId }) {
 
               <textarea
                 placeholder='Enter description...'
-                value={newDescription}
+                value={
+                  newDescription.charAt(0).toUpperCase() +
+                  newDescription.slice(1)
+                }
                 onChange={(event) => setNewDescription(event.target.value)}
               />
 
@@ -130,7 +136,9 @@ function AddTask({ setTasks, listId }) {
               <input
                 type='text'
                 placeholder='Assign to...'
-                value={newAssignedTo}
+                value={
+                  newAssignedTo.charAt(0).toUpperCase() + newAssignedTo.slice(1)
+                }
                 onChange={(event) => setNewAssignedTo(event.target.value)}
               />
             </div>
