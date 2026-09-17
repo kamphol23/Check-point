@@ -8,7 +8,6 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import "./App.css";
-import { useState } from "react";
 
 function App() {
   logIn();
@@ -19,7 +18,7 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path='/HomePage' element={<HomePage />} />
+          <Route path='/' element={<HomePage />} />
           <Route path='/todo' element={<Lists />} />
           <Route path='/ListDetail/:id' element={<ListDetail />} />
         </Routes>

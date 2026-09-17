@@ -1,31 +1,30 @@
 import "./styling/TaskCard.css";
-import { TbEdit } from "react-icons/tb";
 
-function TaskCard({ task, onEdit }) {
+function TaskCard({ task, onOpenTask, status }) {
   return (
-    <div className='task-card'>
-      <div className='title-edit'>
-        <h3>{task.title.charAt(0).toUpperCase() + task.title.slice(1)}</h3>
-
-        <button className='edit-btn' onClick={() => onEdit(task)}>
-          <TbEdit size={20} />
-        </button>
+    <button
+      type='button'
+      className={`task-card ${status}`}
+      onClick={() => onOpenTask(task)}>
+      <div className='task-card-header'>
+        <h3>{task.title}</h3>
+        <div className='task-open-indicator'>Visa detaljer </div>
       </div>
 
-      <p>
-        {task.description.charAt(0).toUpperCase() + task.description.slice(1)}
-      </p>
+      {task.description && (
+        <p className='task-description'>{task.description}</p>
+      )}
 
       <div className='task-card-footer'>
         <span className='task-points'>{task.points} Credits</span>
 
-        <span className='task-user'>
-          {task.assigned_to !== null
-            ? task.assigned_to.charAt(0).toUpperCase()
-            : task.assigned_to}
-        </span>
+        {task.assigned_to?.trim() && (
+          <div className='task-user'>
+            {task.assigned_to.trim().charAt(0).toUpperCase()}
+          </div>
+        )}
       </div>
-    </div>
+    </button>
   );
 }
 
