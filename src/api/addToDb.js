@@ -85,6 +85,7 @@ export const updateTask = async (
   description,
   assignedTo,
   points,
+  dueDate,
 ) => {
   const { data, error } = await supabase
     .from("todos")
@@ -93,6 +94,7 @@ export const updateTask = async (
       description: description,
       assigned_to: assignedTo,
       points: points,
+      due_date: dueDate,
     })
     .eq("id", taskId)
     .select();

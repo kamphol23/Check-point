@@ -1,125 +1,185 @@
-.task-card.todo {
+.task-card {
   width: 100%;
-  text-align: left;
-
-  background: #ffffff;
-  border: 1px solid #e7ecf4;
+  border: 1px solid #e2e8f0;
   border-radius: 18px;
-
-  padding: 18px;
-
+  background: #fff;
+  padding: 20px;
   cursor: pointer;
-
-  transition: all 0.25s ease;
-
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.task-card.active {
-  border-left: 5px solid #5b7cff;
-  width: 100%;
   text-align: left;
-
-  background: #ffffff;
-  border: 1px 1px 1px solid #e7ecf4;
-  border-radius: 18px;
-
-  padding: 18px;
-
-  cursor: pointer;
-
-  transition: all 0.25s ease;
-
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .task-card:hover {
-  transform: translateY(-2px);
-
-  border-color: #cfd9ea;
-
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  transform: translateY(-3px);
+  border-color: #c7d2fe;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
+
+.task-card.active {
+  border-left: 4px solid #6366f1;
+}
+
+/* Header */
 
 .task-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 12px;
+  gap: 16px;
 }
 
 .task-card-header h3 {
   margin: 0;
-
   font-size: 1rem;
-  font-weight: 600;
-
+  font-weight: 700;
   color: #0f172a;
-  line-height: 1.4;
 }
 
-.task-card-arrow {
+/* Aktiv badge */
+
+.task-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Öppna indikator */
+
+.task-open-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: #94a3b8;
-
-  opacity: 0;
-  transform: translateX(-4px);
-
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
-.task-card:hover .task-card-arrow {
-  transform: translateY(-4px);
-  border-color: #7c5cff;
-  box-shadow: 0 15px 35px rgba(124, 92, 255, 0.15);
+.task-card:hover .task-open-indicator {
+  color: #4f46e5;
+  transform: translateX(4px);
 }
 
-.task-description {
-  margin: 0;
+/* Beskrivning */
 
+.task-description {
+  margin: 14px 0 18px;
   color: #64748b;
-  font-size: 0.92rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-
   overflow: hidden;
 }
+
+/* Footer */
 
 .task-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-top: auto;
+  gap: 16px;
 }
 
-.task-points {
-  background: linear-gradient(135deg, #7c5cff, #5b7fff);
+.task-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-  color: white;
+/* Credits */
+
+.task-points {
+  display: inline-flex;
+  align-items: center;
   padding: 6px 12px;
   border-radius: 999px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  font-size: 0.85rem;
   font-weight: 700;
 }
 
-.task-user {
-  width: 34px;
-  height: 34px;
+/* Förfallodatum */
 
+.task-due-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.task-due-date.overdue {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+/* Användare */
+
+.task-user-wrapper {
+  position: relative;
+}
+
+.task-user {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #f1f5f9;
-  color: #334155;
+  background: #eef2ff;
+  color: #4f46e5;
 
-  font-size: 0.9rem;
   font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.user-tooltip {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 8px 12px;
+  border-radius: 10px;
+
+  background: #111827;
+  color: white;
+
+  font-size: 0.75rem;
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.task-user-wrapper:hover .user-tooltip {
+  opacity: 1;
 }

@@ -8,6 +8,7 @@ function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
   const [description, setDescription] = useState("");
   const [points, setPoints] = useState(0);
   const [assignedTo, setAssignedTo] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -17,6 +18,7 @@ function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
     setDescription(task.description || "");
     setPoints(task.points || 0);
     setAssignedTo(task.assigned_to || "");
+    setDueDate(task.due_date);
   }, [task]);
 
   const handleSubmit = async (e) => {
@@ -40,6 +42,7 @@ function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
       description,
       points,
       assigned_to: assignedTo,
+      due_date: dueDate,
     };
 
     await onSave(updatedTask);
@@ -146,6 +149,15 @@ function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
                 onChange={(e) => setAssignedTo(e.target.value)}
                 placeholder='Ingen'
               />
+              <div className='form-group'>
+                <label>Förfallodatum</label>
+
+                <input
+                  type='date'
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                />
+              </div>
             </div>
           </div>
 

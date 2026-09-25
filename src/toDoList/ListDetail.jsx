@@ -86,6 +86,7 @@ function ListDetail() {
         updatedTask.description,
         updatedTask.assigned_to,
         updatedTask.points,
+        updatedTask.due_date,
       );
 
       setTodos((prev) =>
@@ -125,7 +126,9 @@ function ListDetail() {
   return (
     <div className='list-detail'>
       <header className='list-header'>
-        <h1>{ListTitle}</h1>
+        <div>
+          <h1>{ListTitle}</h1>
+        </div>
 
         <div className='list-meta'>
           <span>{todos.length} uppgifter totalt</span>
@@ -136,67 +139,118 @@ function ListDetail() {
                 {member.userName.charAt(0).toUpperCase()}
               </div>
             ))}
-
-            <span className='member-count'>
-              {membersOfList.length} medlemmar
-            </span>
           </div>
         </div>
       </header>
 
       <RewardDisplay lists={currentList ? [currentList] : []} />
 
-      <div className='task-layout'>
-        <section className='todo-section'>
-          <div className='section-header'>
-            <h2>Att göra</h2>
+      <div className='dashboard-stats'>
+        <div className='stat-card'>
+          <h3>{todos.length}</h3>
+          <span>Totala uppgifter</span>
+        </div>
 
-            <AddTask listId={listId} setTasks={setTodos} />
+        <div className='stat-card'>
+          <h3>{workingTask ? 1 : 0}</h3>
+          <span>Aktiv uppgift</span>
+        </div>
+
+        <div className='stat-card'>
+          <h3>{completedTasks.length}</h3>
+          <span>Klara uppgifter</span>
+        </div>
+
+        <div className='stat-card'>
+          <h3>80</h3>
+          <span>Credits kvar</span>
+        </div>
+      </div>
+
+      {workingTask && (
+        <section className='hero-task'>
+          <div className='hero-task-header'>
+            <span className='hero-badge'>⚡ Aktiv uppgift</span>
           </div>
 
-          <div className='task-list'>
-            {todoTasks.map((task) => (
-              <TaskCard
-                task={task}
-                onOpenTask={setSelectedTask}
-                status={"todo"}
-              />
-            ))}
-          </div>
+          <TaskCard
+            task={workingTask}
+            onOpenTask={setSelectedTask}
+            status='active'
+          />
         </section>
+      )}
 
-        <aside className='focus-panel'>
-          <div className='side-section'>
-            <h2>Aktiv uppgift</h2>
-            <br />
+      <div className='dashboard-layout'>
+        <div className='main-content'>
+          <section className='todo-section'>
+            <div className='section-header'>
+              <h2>Att göra</h2>
 
-            {workingTask ? (
-              <TaskCard
-                task={workingTask}
-                onOpenTask={workingTask}
-                status={"active"}
-              />
-            ) : (
-              <div className='empty-state'>Ingen aktiv uppgift</div>
-            )}
+              <AddTask listId={listId} setTasks={setTodos} />
+            </div>
+
+            <div className='task-list'>
+              {todoTasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  onOpenTask={setSelectedTask}
+                  status='todo'
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className='activity-section'>
+            <div className='section-header'>
+              <h2>Aktivitet</h2>
+            </div>
+
+            <Activity activity={activity} listId={listId} />
+          </section>
+        </div>
+
+        <aside className='right-sidebar'>
+          <div className='sidebar-card'>
+            <div className='card-header'>
+              <h3>⏳ Väntar på godkännande</h3>
+              <span>0</span>
+            </div>
+
+            <div className='empty-state'>Inga uppgifter väntar</div>
           </div>
 
-          <div className='side-section'>
-            <h3>Gruppmedlemmar</h3>
+          <div className='sidebar-card'>
+            <div className='card-header'>
+              <h3>🎁 Mina belöningar</h3>
+            </div>
 
-            <div className='member-row'>
+            <RewardDisplay lists={currentList ? [currentList] : []} />
+          </div>
+
+          <div className='sidebar-card add-reward-card'>
+            <h3>Lägg till egen belöning</h3>
+
+            <p>Har du något du vill spara till?</p>
+
+            <button className='add-reward-btn'>+ Skapa belöning</button>
+          </div>
+
+          <div className='sidebar-card'>
+            <h3>👥 Medlemmar</h3>
+
+            <div className='member-list-vertical'>
               {membersOfList.map((member) => (
-                <div key={member.userName} className='member-avatar'>
-                  {member.userName.charAt(0).toUpperCase()}
+                <div key={member.userName} className='member-item'>
+                  <div className='member-avatar'>
+                    {member.userName.charAt(0).toUpperCase()}
+                  </div>
+
+                  <span>{member.userName}</span>
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className='side-section'>
-            <h3>Senaste aktivitet</h3>
-
-            <Activity activity={activity} listId={listId} />
           </div>
         </aside>
       </div>
@@ -210,10 +264,16 @@ function ListDetail() {
 
         <div className='completed-grid'>
           {completedTasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCard
+              key={task.id}
+              task={task}
+              onOpenTask={setSelectedTask}
+              status='completed'
+            />
           ))}
         </div>
       </section>
+
       <EditTask
         task={selectedTask}
         onClose={() => setSelectedTask(null)}
