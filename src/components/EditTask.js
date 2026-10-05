@@ -1,9 +1,28 @@
 import { useEffect, useState } from "react";
-import { TbX, TbCheck, TbTrash, TbCircleCheck } from "react-icons/tb";
+import {
+  TbX,
+  TbCheck,
+  TbTrash,
+  TbCircleCheck,
+  TbCalendar,
+  TbUser,
+  TbCoin,
+  TbPlayerPlay,
+  TbArrowsExchange,
+} from "react-icons/tb";
 
 import "./styling/EditTask.css";
 
-function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
+function EditTask({
+  task,
+  onClose,
+  onSave,
+  onComplete,
+  onDelete,
+  onRewive,
+  onStartTask,
+  activeTaskId,
+}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [points, setPoints] = useState(0);
@@ -18,8 +37,14 @@ function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
     setDescription(task.description || "");
     setPoints(task.points || 0);
     setAssignedTo(task.assigned_to || "");
-    setDueDate(task.due_date);
+    setDueDate(task.due_date || "");
+    setError("");
   }, [task]);
+
+  const handleClose = () => {
+    setError("");
+    onClose();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,126 +63,233 @@ function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
 
     const updatedTask = {
       ...task,
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       points,
-      assigned_to: assignedTo,
+      assigned_to: assignedTo.trim(),
       due_date: dueDate,
     };
 
-    await onSave(updatedTask);
-    onClose();
-  };
+    const result = await onSave(updatedTask);
 
-  const handleComplete = async () => {
-    if (onComplete) {
-      await onComplete(task);
+    if (result?.success === false) {
+      setError(result.error || "Kunde inte spara ändringarna.");
+      return;
     }
 
-    onClose();
+    handleClose();
   };
 
+  /*
+   * Skicka tasken för godkännande
+   */
+  const handleComplete = async () => {
+    if (!task) return;
+
+    try {
+      if (onRewive) {
+        await onRewive(task);
+      } else if (onComplete) {
+        await onComplete(task);
+      }
+
+      handleClose();
+    } catch (error) {
+      console.error(error);
+      setError("Kunde inte skicka uppgiften för godkännande.");
+    }
+  };
+
+  /*
+   * Gör tasken till aktiv task
+   */
+  const handleStartTask = async () => {
+    if (!task || !onStartTask) return;
+
+    try {
+      setError("");
+
+      await onStartTask(task);
+
+      handleClose();
+    } catch (error) {
+      console.error(error);
+      setError("Kunde inte göra uppgiften aktiv.");
+    }
+  };
+
+  /*
+   * Ta bort task
+   */
   const handleDelete = async () => {
+    if (!task) return;
+
     const confirmed = window.confirm(
       `Är du säker på att du vill ta bort "${task.title}"?`,
     );
 
     if (!confirmed) return;
 
-    if (onDelete) {
-      await onDelete(task.id);
-    }
+    try {
+      if (onDelete) {
+        await onDelete(task.id);
+      }
 
-    onClose();
+      handleClose();
+    } catch (error) {
+      console.error(error);
+      setError("Kunde inte ta bort uppgiften.");
+    }
   };
 
   if (!task) return null;
 
+  const isActive = String(task.id) === String(activeTaskId);
+
+  const isPending = task.complet_request && !task.completed;
+
+  const isCompleted = task.completed;
+
   return (
     <>
-      <div
-        className='edit-task-overlay'
-        onClick={() => {
-          setError("");
-          onClose();
-        }}
-      />
+      <div className='edit-task-overlay' onClick={handleClose} />
 
-      <aside className='edit-task-drawer'>
+      <aside className='edit-task-drawer' aria-label='Redigera uppgift'>
         <div className='edit-task-header'>
           <div>
             <span className='edit-task-eyebrow'>Uppgift</span>
 
             <h2>Redigera uppgift</h2>
+
+            <p className='edit-task-subtitle'>
+              Uppdatera information och hantera uppgiften.
+            </p>
           </div>
 
           <button
             type='button'
             className='close-button'
-            onClick={onClose}
+            onClick={handleClose}
             aria-label='Stäng'>
-            <TbX size={24} />
+            <TbX size={22} />
           </button>
         </div>
+
+        {/* ERROR */}
         {error && (
           <div className='form-error'>
-            <span>⚠️</span>
-            {error}
+            <span className='form-error-icon'>!</span>
+
+            <div>
+              <strong>Något gick fel</strong>
+              <p>{error}</p>
+            </div>
           </div>
         )}
+
         <form onSubmit={handleSubmit} className='edit-task-form'>
-          <div className='form-group'>
-            <label htmlFor='task-title'>Titel</label>
+          {/* INFORMATION */}
+          <div className='form-section'>
+            <div className='form-section-header'>
+              <div>
+                <span className='form-section-eyebrow'>Information</span>
 
-            <input
-              id='task-title'
-              type='text'
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
+                <h3>Uppgiftsdetaljer</h3>
+              </div>
+            </div>
 
-          <div className='form-group'>
-            <label htmlFor='task-description'>Beskrivning</label>
-
-            <textarea
-              id='task-description'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-
-          <div className='form-row'>
             <div className='form-group'>
-              <label htmlFor='task-points'>Credits</label>
+              <label htmlFor='task-title'>Titel</label>
+
               <input
-                className={points <= 0 ? "input-error" : ""}
-                type='number'
-                value={points}
-                onChange={(e) => setPoints(Number(e.target.value))}
+                id='task-title'
+                type='text'
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                  setError("");
+                }}
+                placeholder='T.ex. Städa köket'
+                className={!title.trim() ? "input-error" : ""}
               />
             </div>
 
             <div className='form-group'>
-              <label htmlFor='task-assigned'>Tilldelad</label>
+              <label htmlFor='task-description'>Beskrivning</label>
 
-              <input
-                id='task-assigned'
-                type='text'
-                value={assignedTo}
-                onChange={(e) => setAssignedTo(e.target.value)}
-                placeholder='Ingen'
+              <textarea
+                id='task-description'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder='Beskriv vad som behöver göras...'
               />
+            </div>
+          </div>
+
+          {/* INSTÄLLNINGAR */}
+          <div className='form-section'>
+            <div className='form-section-header'>
+              <div>
+                <span className='form-section-eyebrow'>Inställningar</span>
+
+                <h3>Uppgiftsinformation</h3>
+              </div>
+            </div>
+
+            <div className='form-row'>
               <div className='form-group'>
-                <label>Förfallodatum</label>
+                <label htmlFor='task-points'>
+                  <span className='label-with-icon'>
+                    <TbCoin size={16} />
+                    Credits
+                  </span>
+                </label>
 
                 <input
-                  type='date'
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
+                  id='task-points'
+                  type='number'
+                  min='1'
+                  value={points}
+                  onChange={(e) => {
+                    setPoints(Number(e.target.value));
+                    setError("");
+                  }}
+                  className={points <= 0 ? "input-error" : ""}
                 />
               </div>
+
+              <div className='form-group'>
+                <label htmlFor='task-assigned'>
+                  <span className='label-with-icon'>
+                    <TbUser size={16} />
+                    Tilldelad
+                  </span>
+                </label>
+
+                <input
+                  id='task-assigned'
+                  type='text'
+                  value={assignedTo}
+                  onChange={(e) => setAssignedTo(e.target.value)}
+                  placeholder='Ingen'
+                />
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <label htmlFor='task-due-date'>
+                <span className='label-with-icon'>
+                  <TbCalendar size={16} />
+                  Förfallodatum
+                </span>
+              </label>
+
+              <input
+                id='task-due-date'
+                type='date'
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
             </div>
           </div>
 
@@ -167,60 +299,177 @@ function EditTask({ task, onClose, onSave, onComplete, onDelete }) {
 
               <strong
                 className={
-                  task.completed ? "status completed" : "status active"
+                  isCompleted
+                    ? "status completed"
+                    : isPending
+                      ? "status pending"
+                      : isActive
+                        ? "status active"
+                        : "status inactive"
                 }>
                 <span className='status-dot' />
-                {task.completed ? "Klar" : "Aktiv"}
+
+                {isCompleted
+                  ? "Godkänd"
+                  : isPending
+                    ? "Väntar på godkännande"
+                    : isActive
+                      ? "Aktiv"
+                      : "Pågående"}
               </strong>
             </div>
 
-            <div className='task-info-row'>
-              <span>Credits</span>
-              <strong>{points} Credits</strong>
-            </div>
+            {task.assigned_to && (
+              <div className='task-info-row'>
+                <span>Tilldelad till</span>
+
+                <strong>{task.assigned_to}</strong>
+              </div>
+            )}
           </div>
 
+          {/* ÅTGÄRDER */}
           <div className='task-actions-section'>
-            <h3>Åtgärder</h3>
+            <div className='actions-heading'>
+              <span className='form-section-eyebrow'>ÅTGÄRDER</span>
 
-            {!task.completed && (
-              <button
-                type='button'
-                className='action-btn complete-btn'
-                onClick={handleComplete}>
-                <span className='action-icon'>
-                  <TbCircleCheck size={20} />
-                </span>
+              <h3>Hantera uppgift</h3>
+            </div>
 
-                <span className='action-text'>
-                  <strong>Markera som klar</strong>
-                  <small>Slutför uppgiften och få dina Credits</small>
-                </span>
+            {!isActive && !isCompleted && !isPending && (
+              <>
+                <div className='start-task-action'>
+                  <div className='action-card-icon'>
+                    <TbPlayerPlay size={20} />
+                  </div>
 
-                <TbCheck size={20} />
-              </button>
+                  <div className='action-card-content'>
+                    <span className='action-card-label'>Nästa uppgift</span>
+                    <strong>Börja jobba på den</strong>
+                    <p>Gör denna till din aktiva uppgift.</p>
+                  </div>
+
+                  <button
+                    type='button'
+                    className='start-task-btn'
+                    onClick={handleStartTask}>
+                    <TbPlayerPlay size={18} />
+                    Starta
+                  </button>
+                </div>
+
+                {activeTaskId && (
+                  <div className='switch-task-info'>
+                    <div className='switch-task-icon'>
+                      <TbArrowsExchange size={18} />
+                    </div>
+
+                    <div>
+                      <strong>Du jobbar redan på en annan uppgift</strong>
+                      <p>
+                        Om du börjar på denna ersätter den din nuvarande aktiva
+                        uppgift.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
 
+            {!isCompleted && !isPending && (
+              <div className='submit-review-section'>
+                <div className='submit-review-divider'>
+                  <span>När uppgiften är klar</span>
+                </div>
+
+                <div className='submit-review-action'>
+                  <div className='submit-review-icon'>
+                    <TbCircleCheck size={21} />
+                  </div>
+
+                  <div className='submit-review-content'>
+                    <span className='submit-review-label'>Slutför uppgift</span>
+                    <strong>Skicka för godkännande</strong>
+                    <p>
+                      En admin kontrollerar uppgiften innan dina Credits
+                      godkänns.
+                    </p>
+                  </div>
+
+                  <button
+                    type='button'
+                    className='submit-review-btn'
+                    onClick={handleComplete}>
+                    Skicka
+                    <TbCheck size={18} />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {isPending && !isCompleted && (
+              <div className='pending-review'>
+                <div className='pending-review-icon'>
+                  <TbCircleCheck size={21} />
+                </div>
+
+                <div>
+                  <strong>Väntar på godkännande</strong>
+
+                  <p>
+                    Uppgiften är inskickad och väntar på att en admin ska
+                    kontrollera den.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {isCompleted && (
+              <div className='approved-task'>
+                <div className='approved-task-icon'>
+                  <TbCheck size={21} />
+                </div>
+
+                <div>
+                  <strong>Uppgiften är godkänd</strong>
+
+                  <p>En admin har godkänt uppgiften.</p>
+                </div>
+              </div>
+            )}
+
+            {/* SAVE */}
             <div className='edit-task-actions'>
-              <button type='button' className='cancel-btn' onClick={onClose}>
+              <button
+                type='button'
+                className='cancel-btn'
+                onClick={handleClose}>
                 Avbryt
               </button>
 
               <button type='submit' className='save-btn'>
+                <TbCheck size={18} />
                 Spara ändringar
               </button>
             </div>
           </div>
 
+          {/* DELETE */}
           <div className='danger-zone'>
-            <div>
-              <h3>Ta bort uppgift</h3>
+            <div className='danger-content'>
+              <div className='danger-icon'>
+                <TbTrash size={18} />
+              </div>
 
-              <p>Uppgiften tas bort permanent och kan inte återställas.</p>
+              <div>
+                <h3>Ta bort uppgift</h3>
+
+                <p>Uppgiften tas bort permanent och kan inte återställas.</p>
+              </div>
             </div>
 
             <button type='button' className='delete-btn' onClick={handleDelete}>
-              <TbTrash size={19} />
+              <TbTrash size={18} />
               Ta bort
             </button>
           </div>

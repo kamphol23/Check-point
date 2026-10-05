@@ -67,33 +67,312 @@
   font-size: 0.9rem;
 }
 
+.task-list {
+  display: grid;
+  gap: 10px;
+}
+
 /* ===========================
    HERO TASK
 =========================== */
 
+/* =========================================
+   HERO TASK
+========================================= */
+
 .hero-task {
-  background: linear-gradient(135deg, #f5f3ff, #eef2ff);
-  border: 1px solid #ddd6fe;
-  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+
   padding: 24px;
+
   margin-bottom: 24px;
+
+  border: 1px solid #dbe4ff;
+  border-radius: 28px;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(99, 102, 241, 0.16),
+      transparent 38%
+    ),
+    linear-gradient(135deg, #f8f9ff, #eef2ff);
+
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.06);
 }
 
 .hero-task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
   margin-bottom: 18px;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
+
+  padding: 8px 13px;
+
+  border-radius: 999px;
 
   background: #eef2ff;
   color: #4f46e5;
 
-  padding: 8px 14px;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.hero-badge.pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.hero-task-hint {
+  color: #64748b;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* =========================================
+   PENDING
+========================================= */
+
+.hero-pending {
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 22px;
+
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.hero-pending-icon {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 17px;
+
+  background: #fef3c7;
+
+  font-size: 1.5rem;
+
+  box-shadow: 0 5px 15px rgba(245, 158, 11, 0.12);
+}
+
+.hero-pending-content {
+  flex: 1;
+}
+
+.hero-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #6366f1;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hero-pending-content h2 {
+  margin: 0 0 7px;
+
+  color: #111827;
+
+  font-size: 1.25rem;
+}
+
+.hero-pending-content p {
+  margin: 0;
+
+  max-width: 650px;
+
+  color: #64748b;
+
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.hero-pending-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 14px;
+}
+
+.hero-pending-meta span {
+  padding: 6px 10px;
+
   border-radius: 999px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  color: #64748b;
+
+  font-size: 0.73rem;
   font-weight: 700;
+}
+
+/* =========================================
+   HERO FOOTER
+========================================= */
+
+.hero-task-footer {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 18px;
+}
+
+.hero-footer-info {
+  color: #64748b;
+
+  font-size: 0.76rem;
+}
+
+/* =========================================
+   TAKE NEW TASK
+========================================= */
+
+.take-task-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 11px 16px;
+
+  border: 1px solid #dbe3ee;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #334155;
+
+  font-family: inherit;
+
+  font-size: 0.84rem;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.take-task-btn:hover {
+  transform: translateY(-2px);
+
+  border-color: #c7d2fe;
+
+  background: #ffffff;
+
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.take-task-btn span {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.take-task-btn.primary {
+  border-color: #6366f1;
+
+  background: #6366f1;
+  color: #ffffff;
+
+  box-shadow: 0 7px 18px rgba(99, 102, 241, 0.22);
+}
+
+.take-task-btn.primary:hover {
+  background: #4f46e5;
+  border-color: #4f46e5;
+
+  box-shadow: 0 10px 24px rgba(99, 102, 241, 0.28);
+}
+
+/* =========================================
+   NO ACTIVE TASK
+========================================= */
+
+.hero-empty {
+  min-height: 180px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.hero-empty-icon {
+  width: 64px;
+  height: 64px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  font-size: 1.6rem;
+
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08);
+}
+
+.hero-empty-content {
+  flex: 1;
+}
+
+.hero-empty-content h2 {
+  margin: 0 0 6px;
+
+  color: #111827;
+
+  font-size: 1.3rem;
+}
+
+.hero-empty-content p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 /* ===========================

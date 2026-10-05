@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 
 import getTodos from "../api/todos";
-import { updateTask } from "../api/addToDb";
+import {
+  updateTask,
+  updateRewiveRequest,
+  updateMemberWorkingOnTask,
+} from "../api/addToDb";
 import { getMemberLists, getListMembers } from "../api/lists";
 import { getActivity } from "../api/activityLog";
 import { deleteTask } from "../api/delete";
@@ -40,6 +44,7 @@ function ListDetail() {
 
         setTodos(todoData || []);
         setLists(listData || []);
+
         setMembersOfList(memberData || []);
         setActivity(activityData || []);
       } catch (error) {
@@ -50,19 +55,40 @@ function ListDetail() {
     fetchData();
   }, [listId]);
 
+  // Hitta den nuvarande listan som användaren står i
   const currentList = lists.find(
     (list) => String(list.list_id) === String(listId),
   );
 
+  // Hämtar den tasken som anändaren jobbar på just nu
   const workingTask = todos.find(
-    (task) => task.id === currentList?.working_on_id,
+    (task) =>
+      task.id === currentList?.working_on_id &&
+      !task.complet_request &&
+      !task.completed,
   );
+  const activeTask =
+    workingTask && !workingTask.complet_request && !workingTask.completed
+      ? workingTask
+      : null;
 
+  const onTakeNewTask = () => {
+    // Här kopplar vi senare in API-anropet
+    // som tilldelar en ny task till användaren.
+  };
+  // filterar alla task som inte är klara
   const todoTasks = todos.filter(
-    (task) => !task.completed && task.id !== currentList?.working_on_id,
+    (task) =>
+      !task.completed &&
+      !task.complet_request &&
+      task.id !== currentList?.working_on_id,
   );
 
+  // alla task som är klara
   const completedTasks = todos.filter((task) => task.completed);
+
+  //filterar ut alla task som väntar på att bli godkända och lägger det i en list
+  const listOfRewive = todos.filter((task) => task.complet_request === true);
 
   const handelUpdatedTask = async (updatedTask) => {
     if (!updatedTask.title.trim()) {
@@ -107,10 +133,54 @@ function ListDetail() {
     // API-anrop
   };
 
-  const handleReopenTask = async (task) => {
-    // API-anrop
+  const handleStartTask = async (task) => {
+    if (!currentList?.list_id || !task?.id) {
+      console.error("Missing list or task");
+      return;
+    }
+
+    try {
+      await updateMemberWorkingOnTask(currentList.list_id, task.id, task.title);
+
+      setLists((prev) =>
+        prev.map((list) =>
+          String(list.list_id) === String(currentList.list_id)
+            ? {
+                ...list,
+                working_on_id: task.id,
+                working_on_task_name: task.title,
+              }
+            : list,
+        ),
+      );
+
+      setSelectedTask(null);
+    } catch (error) {
+      console.error("Error starting task:", error);
+    }
   };
 
+  const handleIsReadyForRewive = async (task) => {
+    const newValue = !task.complet_request;
+
+    try {
+      await updateRewiveRequest(task.id, newValue);
+
+      setTodos((prev) =>
+        prev.map((todo) =>
+          todo.id === task.id
+            ? {
+                ...todo,
+                complet_request: newValue,
+              }
+            : todo,
+        ),
+      );
+    } catch (error) {
+      console.error("Kunde inte uppdatera review request:", error);
+      throw error;
+    }
+  };
   const handleDeleteTask = async (taskId) => {
     try {
       await deleteTask(taskId);
@@ -158,28 +228,97 @@ function ListDetail() {
 
         <div className='stat-card'>
           <h3>{completedTasks.length}</h3>
-          <span>Klara uppgifter</span>
+          <span>Väntar granskning</span>
         </div>
 
         <div className='stat-card'>
-          <h3>80</h3>
-          <span>Credits kvar</span>
+          <h3>{currentList?.points ?? 0}</h3>
+          <span>Credits</span>
         </div>
       </div>
 
-      {workingTask && (
-        <section className='hero-task'>
-          <div className='hero-task-header'>
-            <span className='hero-badge'>⚡ Aktiv uppgift</span>
-          </div>
+      <section className='hero-task'>
+        {activeTask ? (
+          <>
+            <div className='hero-task-header'>
+              <span className='hero-badge'>⚡ Aktiv uppgift</span>
 
-          <TaskCard
-            task={workingTask}
-            onOpenTask={setSelectedTask}
-            status='active'
-          />
-        </section>
-      )}
+              <span className='hero-task-hint'>Jobba på den här uppgiften</span>
+            </div>
+
+            <TaskCard
+              task={activeTask}
+              onOpenTask={setSelectedTask}
+              status='active'
+            />
+          </>
+        ) : workingTask?.complet_request ? (
+          <>
+            <div className='hero-task-header'>
+              <span className='hero-badge pending'>
+                🕐 Väntar på godkännande
+              </span>
+            </div>
+
+            <div className='hero-pending'>
+              <div className='hero-pending-icon'>🕐</div>
+
+              <div className='hero-pending-content'>
+                <span className='hero-eyebrow'>Uppgift inskickad</span>
+
+                <h2>{workingTask.title}</h2>
+
+                <p>
+                  Du har skickat uppgiften för godkännande. En admin behöver
+                  kontrollera den innan den blir godkänd.
+                </p>
+
+                <div className='hero-pending-meta'>
+                  <span>{workingTask.points} Credits</span>
+
+                  <span>Väntar på admin</span>
+                </div>
+              </div>
+            </div>
+
+            <div className='hero-task-footer'>
+              <button
+                type='button'
+                className='take-task-btn'
+                onClick={onTakeNewTask}>
+                <span>＋</span>
+                Ta en ny uppgift
+              </button>
+
+              <span className='hero-footer-info'>
+                Du kan fortsätta med en annan uppgift medan denna granskas.
+              </span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className='hero-empty'>
+              <div className='hero-empty-icon'>✨</div>
+
+              <div className='hero-empty-content'>
+                <span className='hero-eyebrow'>Redo för nästa?</span>
+
+                <h2>Ingen aktiv uppgift</h2>
+
+                <p>Välj en uppgift från listan och börja samla Credits.</p>
+              </div>
+
+              <button
+                type='button'
+                className='take-task-btn primary'
+                onClick={onTakeNewTask}>
+                <span>＋</span>
+                Ta en ny uppgift
+              </button>
+            </div>
+          </>
+        )}
+      </section>
 
       <div className='dashboard-layout'>
         <div className='main-content'>
@@ -215,9 +354,16 @@ function ListDetail() {
           <div className='sidebar-card'>
             <div className='card-header'>
               <h3>⏳ Väntar på godkännande</h3>
-              <span>0</span>
+              <span>{listOfRewive.length}</span>
             </div>
-
+            {listOfRewive.map((task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                onOpenTask={setSelectedTask}
+                status='waiting'
+              />
+            ))}
             <div className='empty-state'>Inga uppgifter väntar</div>
           </div>
 
@@ -280,7 +426,9 @@ function ListDetail() {
         onSave={handelUpdatedTask}
         onDelete={handleDeleteTask}
         onComplete={handleCompleteTask}
-        onReopen={handleReopenTask}
+        onRewive={handleIsReadyForRewive}
+        onStartTask={handleStartTask}
+        activeTaskId={currentList?.working_on_id}
       />
     </div>
   );

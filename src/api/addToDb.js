@@ -106,6 +106,16 @@ export const updateTask = async (
   return data;
 };
 
+//update task rewiveRequest by id
+export const updateRewiveRequest = async (taskId, completRequest) => {
+  const { data, error } = await supabase
+    .from("todos")
+    .update({ complet_request: completRequest })
+    .eq("id", taskId);
+  if (error) {
+    console.log(error);
+  }
+};
 //update list name by list id
 export const updateListName = async (listId, newName) => {
   const { data, error } = await supabase
@@ -133,6 +143,19 @@ export const updateListNameInMembers = async (listId, newName) => {
 
   if (error) {
     console.error("Error updating list name in members:", error);
+    throw error;
+  }
+  return data;
+};
+
+export const updateMemberWorkingOnTask = async (listId, taskId, taskName) => {
+  const { data, error } = await supabase
+    .from("list_members")
+    .update({ working_on_id: taskId, working_on_task_name: taskName })
+    .eq("list_id", listId)
+    .select();
+  if (error) {
+    console.error("Error updating member working on task:", error);
     throw error;
   }
   return data;
