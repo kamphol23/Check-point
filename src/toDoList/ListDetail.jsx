@@ -10,7 +10,7 @@ import {
 import { getMemberLists, getListMembers } from "../api/lists";
 import { getActivity } from "../api/activityLog";
 import { deleteTask } from "../api/delete";
-
+import PendingTask from "./PendingTask";
 import RewardDisplay from "../components/RewardDisplay/RewardDisplay";
 import TaskCard from "./TaskCard";
 import EditTask from "../components/EditTask";
@@ -356,15 +356,19 @@ function ListDetail() {
               <h3>⏳ Väntar på godkännande</h3>
               <span>{listOfRewive.length}</span>
             </div>
-            {listOfRewive.map((task) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                onOpenTask={setSelectedTask}
-                status='waiting'
-              />
-            ))}
-            <div className='empty-state'>Inga uppgifter väntar</div>
+            <div className='pending-task-list'>
+              {listOfRewive.length > 0 ? (
+                listOfRewive.map((task) => (
+                  <PendingTask
+                    key={task.id}
+                    task={task}
+                    onOpenTask={setSelectedTask}
+                  />
+                ))
+              ) : (
+                <div className='empty-state'>Inga uppgifter väntar</div>
+              )}
+            </div>
           </div>
 
           <div className='sidebar-card'>
