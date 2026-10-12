@@ -31,7 +31,7 @@ export const getTodayStats = async (listId) => {
   const { data, error } = await supabase
     .from("todos")
     .select("*")
-    .eq("assigned_user_username", "kamphol");
+    .eq("assigned_to", "kamphol");
 
   if (error) throw error;
 

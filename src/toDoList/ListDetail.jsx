@@ -90,6 +90,14 @@ function ListDetail() {
   //filterar ut alla task som väntar på att bli godkända och lägger det i en list
   const listOfRewive = todos.filter((task) => task.complet_request === true);
 
+  //filterar ut alla task som är tilldelade till användaren och lägger det i en list
+  const listOfAssignedTasks = todos.filter(
+    (task) =>
+      task.assigned_to?.trim().toLowerCase() ===
+        currentList?.userName?.trim().toLowerCase() &&
+      task.complet_request === false,
+  );
+  // Hanterar uppdatering av en task
   const handelUpdatedTask = async (updatedTask) => {
     if (!updatedTask.title.trim()) {
       return {
@@ -201,7 +209,7 @@ function ListDetail() {
         </div>
 
         <div className='list-meta'>
-          <span>{todos.length} uppgifter totalt</span>
+          <span>{todoTasks.length} uppgifter totalt</span>
 
           <div className='member-list'>
             {membersOfList.map((member) => (
@@ -222,12 +230,12 @@ function ListDetail() {
         </div>
 
         <div className='stat-card'>
-          <h3>{workingTask ? 1 : 0}</h3>
-          <span>Aktiv uppgift</span>
+          <h3>{listOfAssignedTasks.length}</h3>
+          <span>Tilldelade uppgifter</span>
         </div>
 
         <div className='stat-card'>
-          <h3>{completedTasks.length}</h3>
+          <h3>{listOfRewive.length}</h3>
           <span>Väntar granskning</span>
         </div>
 
