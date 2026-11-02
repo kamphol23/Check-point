@@ -8,14 +8,19 @@ import {
   updateMemberWorkingOnTask,
 } from "../api/addToDb";
 import { getMemberLists, getListMembers } from "../api/lists";
+import isCompleted from "../api/isCompleted";
+
 import { getActivity } from "../api/activityLog";
 import { deleteTask } from "../api/delete";
+import { getRewards } from "../api/rewards";
+
 import PendingTask from "./PendingTask";
 import RewardDisplay from "../components/RewardDisplay/RewardDisplay";
 import TaskCard from "./TaskCard";
 import EditTask from "../components/EditTask";
 import AddTask from "./AddTask";
 import Activity from "./Activity";
+import RewardRow from "./RewardRow";
 
 import "./styling/ListDetail.css";
 
@@ -30,20 +35,23 @@ function ListDetail() {
   const [membersOfList, setMembersOfList] = useState([]);
   const [activity, setActivity] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [rewards, setRewards] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [todoData, listData, memberData, activityData] =
+        const [todoData, listData, memberData, activityData, rewardData] =
           await Promise.all([
             getTodos(listId),
             getMemberLists(),
             getListMembers(listId),
             getActivity(),
+            getRewards(listId),
           ]);
 
         setTodos(todoData || []);
         setLists(listData || []);
+        setRewards(rewardData || []);
 
         setMembersOfList(memberData || []);
         setActivity(activityData || []);
@@ -83,12 +91,14 @@ function ListDetail() {
       !task.complet_request &&
       task.id !== currentList?.working_on_id,
   );
-
+  console.log(currentList);
   // alla task som är klara
   const completedTasks = todos.filter((task) => task.completed);
 
   //filterar ut alla task som väntar på att bli godkända och lägger det i en list
-  const listOfRewive = todos.filter((task) => task.complet_request === true);
+  const listOfRewive = todos.filter(
+    (task) => task.complet_request === true && task.completed !== true,
+  );
 
   //filterar ut alla task som är tilldelade till användaren och lägger det i en list
   const listOfAssignedTasks = todos.filter(
@@ -137,8 +147,13 @@ function ListDetail() {
       };
     }
   };
+
   const handleCompleteTask = async (task) => {
-    // API-anrop
+    try {
+      const data = await isCompleted(task.id, !task.completed);
+    } catch (error) {
+      console.error("Error completing task:", error);
+    }
   };
 
   const handleStartTask = async (task) => {
@@ -379,15 +394,13 @@ function ListDetail() {
             </div>
           </div>
 
-          <div className='sidebar-card'>
+          <div className='sidebar-card add-reward-card'>
             <div className='card-header'>
               <h3>🎁 Mina belöningar</h3>
             </div>
-
-            <RewardDisplay lists={currentList ? [currentList] : []} />
-          </div>
-
-          <div className='sidebar-card add-reward-card'>
+            {rewards.map((reward) => (
+              <RewardRow key={reward.id} reward={reward} />
+            ))}
             <h3>Lägg till egen belöning</h3>
 
             <p>Har du något du vill spara till?</p>
@@ -441,6 +454,7 @@ function ListDetail() {
         onRewive={handleIsReadyForRewive}
         onStartTask={handleStartTask}
         activeTaskId={currentList?.working_on_id}
+        isOwner={currentList?.isOwner}
       />
     </div>
   );

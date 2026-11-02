@@ -1,0 +1,50 @@
+.reward-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 14px;
+
+  border: 1px solid #e2e8f3;
+  border-radius: 16px;
+  background: #fff;
+  color: #17233f;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.reward-row-icon,
+.reward-row-credits,
+.reward-row-chevron {
+  flex-shrink: 0;
+}
+
+.reward-row-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.reward-row-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+
+  margin: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.reward-row-description {
+  margin: 4px 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reward-row-credits {
+  white-space: nowrap;
+}
